@@ -1,0 +1,147 @@
+
+ 4OS2 version 3.09, Open Source Edition
+ =======================================
+
+ This software is provided "AS IS" without a warranty of any kind.
+
+ This is a free release of the 4OS2 command processor. This software is
+not supported by JP Software in any manner. For license terms please see
+enclosed file license.txt.
+
+
+ Hint
+ ----
+
+ Look into the supplied *.sample files to see some convenient settings. If you
+do not have your own 4os2.ini and 4start.cmd files you can simply rename the
+sample files.  It is recommended that you check that the default settings suit
+your needs.
+
+
+ Known problems
+ --------------
+
+ None, but it is unlikely that there wouldn't be any.
+
+
+ Fixes and changes since last release
+ ------------------------------------
+
+ 3.09.1-shl (3.09.1 beta)
+ - Avoid PMMERGE traps due to szSwtitle overflow
+ - Sync memory command text to displayed values
+
+ 3.09 (3.09 GA)
+ - Set version number
+
+ 3.08.4-shl (3.09 beta)
+ - Correct memory DirHistory size display
+
+ 3.08.3-shl (3.09 beta)
+ - Ensure that 4os2 understands that given command lines like @ foo.exe
+   @ is not an INI file indicator
+ - Double max input line length to 2048, needed for compiling some QT4 stuff
+   (by Andreas for Elbert)
+ - Ensure command lines like @foo.exe do not treat foo.exe as an INI file
+ - Ensure max length quoted pathnames handled correctly.
+ - Correct ESET logic for BEGINLIBPATH etc.
+ - Resolve list I command exception (ticket #20, changset 37507)
+ - Support #! as EXTPROC equivalent if UnixPaths enabled
+ - Default History and DirHistory to page multiples
+ - Show DirHistory memory usage in memory command output
+ - Update @makeage to be Y2K compliant
+
+ 3.08_2
+ - rereleased 3.08, only difference - 4start.cmd.sample added '.;' with CDPATH
+
+ 3.08
+ - Fix for ticket #14 - CDWithoutBackslash=2 broke some scripts
+ - Changed VER_REVISION handling (no influence on official builds)
+
+ 3.07
+ - Implemented diff from ticket #7 (CHCP)
+
+ 3.06
+ - Added bldlevel to .exe and .dll files
+ - Added help for options dialog
+ - Fixed TitleIsCurDir behaviour (partly reverted SHLs changes)
+ - Changed version numbering to digits only
+ - Fixed cd into directories with names containing [
+
+ 3.05A
+ - Added window title shows current directory
+ - Added directory change without cd and trailing \
+ - Changed popup window position relative to cursor
+ - Changed ver /r shows build date/time
+ - Fixed files size displayed by dir for files >=2GB
+ - Fixed touch for files >=2GB
+ - Changed dir footer 'byte' and 'allocated byte' display
+ - Fixed copy and concatenate with large files
+ - Changed dir to use only 7 chars for EA size
+ - Fixed/Changes ranges used for various commands with files >2GB, added g and
+   G range specifier (/[s3G] means files bigger than 3GByte)
+ - Added special treatment for type command on devices (type alsahlp$, type
+   ibms506$...), read below
+ - Added Alt-F4 hotkey to close 4os2
+ - Added sample .ini and start.cmd files
+
+ pre 3.05
+ - Fixed CHCP command crashes
+ - Changed JPOS2DLL.DLL loading
+ - Fixed changing the command window icon
+ - Fixed crashes caused by entering "cd,,"
+ - Fixed DBCS input problems (by KO Myung-Hun)
+ - Fixed minor problem with FAT32 filesystems (by KO Myung-Hun)
+ - Fixed problem with IFFs nested inside GOSUBs
+ - Fixed file position display (percentage) bug when LISTing large files
+ - Fixed FFIND command, /T option was completely broken
+ - Added support for LIBPATHSTRICT
+ - Fixed the ability to change 4OS2 VIO window title in certain cases
+ - Added ChangeTitle configuration option to suppress session title changes
+ - Fixed shift /1 crashes
+ - Fixed spurious REXX error reports
+ - Fixed clipboard access, added Ctrl-V hotkey (by Knut St. Osmundsen)
+
+ More details are available in the online documentation (4OS2.INF).
+
+ All changes in version 3.04 and later were made by Michal Necasek, Steven
+ Levine and Andreas Buchinger (except where noted otherwise), NOT by JP Software.
+
+
+ Type on devices
+ ---------------
+
+ In contrary to the standard OS/2 type command the 4os2 type command handles
+'carriage return' (0x0D, <CR>) characters as 'line feed' in page mode (/P) and
+currently ignores it in normal mode.
+
+ Advantage: with weird devices like alsahlp$ no text is lost as with standard
+type which overwrittes lines immediatly when <CR> is encountered
+
+ Disadvantage: with weird devices like alsahlp$ in page mode (/P) when end of
+line is marked with a <LF> followed by <CR> instead the usual <CR><LF>, this
+will produce intermediate empty lines.
+
+ Anyway you can always redirect output to a file to see what the device really
+wants to tell you. Or use "copy alsahlp$ con:" to see it similar than with
+cmd.exe (lines are overwritten with <CR>)
+
+ Note: wrnd32$ and some versions of alsahlp$ do not like when reading data
+in single byte mode. This mode is used with type options /P and /L. These
+devices return none or garbarge output in this case. It's not easy to implement
+a work around for such weird behaving devices. It's up to the device driver
+developers to fix this. In the meantime I can only suggest to not use /P or /L
+with such devices.
+
+
+ Support
+ -------
+
+ This release of 4OS2 is not supported by JP Software, Inc. Neither is it
+officially supported by anyone else. Informal support may or may not
+be provided via e-mail at <michaln@scitechsoft.com>. There is a bug tracker
+established at http://svn.netlabs.org/4os2. Please use this to report bugs.
+
+ This software is Copyright (c) 1989-2004 J.P. Software, Inc.
+
+20161228 AB
