@@ -14,6 +14,17 @@
 @if not defined CDPATH set CDPATH=..;..\..;
 
 @echo Review %@full[%0] and
-@echo edit to suit your needs and delete these echo statements and
-@echo the pause statement.
-@pause
+@echo edit (E) to suit your needs. Then delete these lines ending with '@set key='.
+@echo accept (A) this file with these lines removed
+@echo skip (S) over this message it will appear again the next time you start 4OS2
+@echo  
+@inkey /k"EAS" Edit %@full[%0] now [E/A/S]? %%key
+@iff "%key"=="E" .OR. "%key"=="e" then
+     @start e.exe %@full[%0]
+else iff "%key"=="A" .OR. "%key"=="a" then
+     @move /Q /E 4start.cmd.tpl2 4start.cmd
+else
+     cls
+endiff
+@set key=
+
