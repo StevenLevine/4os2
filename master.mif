@@ -94,8 +94,8 @@ vdm2os2.exe : vdm2os2.c
     mkmsgf $< $@
 
 4os2.inf : ..\4os2.ipf
-    ipfc -i -D:1 -C:850 -L:ENU $< $@
-
+#    ipfc -i -D:1 -C:850 -L:ENU $< $@
+    wipfc -i -l en_US $< -o $@
 ..\buildlevel.txt : msg.obj
     ..\make_buildlevel.cmd
 
