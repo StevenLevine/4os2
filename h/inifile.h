@@ -469,6 +469,7 @@ INI_ITEM gaINIItemList[] = {
 
     // Everything but TCMD/16
     "DuplicateBugs", INI_CHOICE, 0, &V_YesNo, &gaInifile.DupBugs, DLG_NULL
+    "CMDDirMvCpy", INI_CHOICE, 0, &V_YesNo, &gaInifile.CMDDirMvCpy, DLG_NULL
     "LocalAliases", INI_CHOICE, 0, &V_YesNo, &gaInifile.LocalAliases, DLG_DATA(IDI_LocalAliases, INI_CTL_CHECK, 0)
     "LocalDirHistory", INI_CHOICE, 0, &V_YesNo, &gaInifile.LocalDirHistory, DLG_DATA(IDI_LocalDirHistory, INI_CTL_CHECK, 0)
     "LocalHistory", INI_CHOICE, 0, &V_YesNo, &gaInifile.LocalHistory, DLG_DATA(IDI_LocalHistory, INI_CTL_CHECK, 0)
@@ -559,7 +560,7 @@ extern unsigned int guINIItemCount;
 #define E_BADNUM  "Invalid numeric value for"
 #define E_BADCHR  "Invalid character value for"
 #define E_BADCHC  "Invalid choice value for"
-#define E_BADKEY  "Invalid key substitution for"
+#define E_BADKEY  "Invalid key substitution for (key not used by 4OS2)"
 #define E_KEYFUL  "Keystroke substitution table full"
 #define E_BADCOL  "Invalid color for"
 #define E_BADPTH  "Invalid path or file name for"

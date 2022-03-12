@@ -198,6 +198,7 @@ typedef struct
 
     // Choices
     unsigned char DupBugs;      // duplicate CMD.EXE bugs?
+    unsigned char CMDDirMvCpy;   // use CMD's move and copy style for dirictories
     unsigned char LocalAliases; // LocalAliases
     unsigned char LocalDirHistory;  // LocalDirHistory
     unsigned char LocalHistory; // LocalHistory

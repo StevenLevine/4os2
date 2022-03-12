@@ -224,7 +224,7 @@ typedef struct {
 #define DIRFLAGS_TRUNCATE_DESCRIPTION 0x200000L
 #define DIRFLAGS_TREE 0x400000L
 #define DIRFLAGS_ALLOCATED 0x800000L
-
+#define DIRFLAGS_NO_ERRORS 0x1000000L
 
 typedef struct {
     char cname[30];
