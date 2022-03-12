@@ -215,7 +215,8 @@ int tree_cmd( int argc, char **argv )
         }
 
         if ( is_dir( arg ) == 0 ) {
-            rval = error( ERROR_PATH_NOT_FOUND, arg );
+            if ((glDirFlags & DIRFLAGS_NO_ERRORS) == 0)
+                rval = error( ERROR_PATH_NOT_FOUND, arg );
             continue;
         }
 
@@ -238,7 +239,7 @@ int tree_cmd( int argc, char **argv )
 static int DrawTree( char *pszCurrent, char *pszSequelBuffer )
 {
     int rval = 0, fOK, nAttrib;
-    unsigned int uMode = 0x9110;
+    unsigned int uMode = FIND_NO_DOTNAMES | FIND_CREATE | FIND_NOERRORS | FILE_DIRECTORY; // 0x9110
     char *pszName, *pszSave, cAmPm = ' ';
     FILESEARCH dir;
 
@@ -447,6 +448,10 @@ int dir_cmd( int argc, char **argv )
 
                         case 'P':       // pause on pages
                             gnPageLength = GetScrRows();
+                            break;
+
+                        case 'Q':
+                            glDirFlags |= DIRFLAGS_NO_ERRORS;
                             break;
 
                         case 'R':       // truncate descriptions
@@ -1449,7 +1454,8 @@ int SearchDirectory( int attrib, char *arg, DIR_ENTRY **hptr, unsigned int *entr
         if ( find_file( fval, arg, (unsigned int)(attrib | M ), &dir, NULL ) == NULL ) {
 #undef M
 
-            if ( ( *entries == 0 ) && (( glDirFlags & DIRFLAGS_RECURSE) == 0 ) )
+            if ( ( *entries == 0 ) && (( glDirFlags & DIRFLAGS_RECURSE) == 0 ) &&
+                (( glDirFlags & DIRFLAGS_NO_ERRORS) == 0 ) )
                 error( ERROR_FILE_NOT_FOUND, saved_arg );
             break;
         }

@@ -58,7 +58,8 @@ void FilesProcessed( char *szFormat, long lFiles )
 #define COPY_DOS62_Y 0x10000L
 #define COPY_KEEP_ATTRIBUTES 0x20000L
 #define COPY_OVERWRITE_RDONLY 0x40000L
-#define COPY_EXISTS 0x80000L
+#define COPY_CMDDIRS 0x80000L
+#define COPY_EXISTS 0x100000L
 
 // COPY_FLAGS
 #define APPEND_FLAG 1
@@ -121,7 +122,7 @@ int copy_cmd( int argc, char **argv )
         // check for MS-DOS 6.2 /-Y option & convert it to a COPY /R
         if ( _stricmp( arg, "/-Y" ) == 0 )
             lCopy = COPY_REPLACE;
-        else if ( ( lCopy = switch_arg( arg, "*ABCEHMNPQRSTUVXFKZ" )) == -1 )
+        else if ( ( lCopy = switch_arg( arg, "*ABCEHMNPQRSTUVXFKZJ" )) == -1 )
             return( usage( COPY_USAGE ));  // invalid switch
 
         Copy.fOptions |= lCopy;
@@ -155,7 +156,6 @@ int copy_cmd( int argc, char **argv )
 
         argc++;
     }
-
     // check for flag to preserve all attributes (won't work w/Netware!)
     if ( Copy.fOptions & COPY_KEEP_ATTRIBUTES )
         Copy.fFlags |= MOVING_FILES;
@@ -273,8 +273,55 @@ int copy_cmd( int argc, char **argv )
             // if source is not a device, make a full filename
             if ( mkfname( arg, 0 ) == NULL )
                 break;
-            if ( is_dir( arg ) )
+            if ( is_dir( arg ) ) {
                 mkdirname( arg, WILD_FILE );
+                if ( (Copy.fOptions & COPY_CMDDIRS || gpIniptr->CMDDirMvCpy) &&
+                    (!strstr( arg, ":\\*") || !strstr( arg, ":/*")) ) {
+                    char *p;
+                    PSZ temp = strdup(arg);
+                    
+                    p = Copy.szTarget + strlen(Copy.szTarget) - 1;
+                    if ( ~Copy.fOptions & COPY_SUBDIRS || strchr(p, '\\') ||  strchr(p, '/')) {
+                        p = strrchr(Copy.szTarget, '\\');
+                        if ( p )
+                            *p = '\0';
+                        else {
+                            p = strrchr(Copy.szTarget, '/');
+                            if ( p )
+                                *p = '\0';
+                        }
+                    }
+                    p = strrchr(temp, '\\');
+                    if ( p ) {
+                        *p = '\0';
+                        p = strrchr(temp, '\\');
+                        if ( !p ) {
+                            strcat(Copy.szTarget, "\\");
+                            p = temp;
+                        }
+                    } else {
+                        p = strrchr(temp, '/');
+                        if ( p ) {
+                            *p = '\0';
+                            p = strrchr(temp, '/');
+                            if ( !p ) {
+                                strcat(Copy.szTarget, "/");
+                                p = temp;
+                            }
+                        }
+                    }
+                    if ( p ) {
+                        strcat(Copy.szTarget, p);
+                        MakeDirectory( Copy.szTarget, 1 );
+                        if ( ~Copy.fOptions & COPY_SUBDIRS )
+                            mkdirname(Copy.szTarget, WILD_FILE );
+                    } else {
+                        free(temp);
+                        return( error( ERROR_PATH_NOT_FOUND, Copy.szTarget ));
+                    }
+                    free(temp);
+                }
+            }
         }
 
         copy_filename( Copy.szSource, arg );
@@ -388,7 +435,7 @@ static int _copy(COPY_STRUCT *Copy)
 
         // remove trailing '/' or '\'
         strip_trailing( Copy->szTarget+3, SLASHES );
-
+        // insert Copy change
         if ( ( Copy->fOptions & COPY_NOTHING ) == 0 ) {
 
             // if we created the directory, then copy any
@@ -608,8 +655,9 @@ static int _copy(COPY_STRUCT *Copy)
 #define MOVE_TOTALS 0x1000
 #define MOVE_UPDATED 0x2000
 #define MOVE_VERIFY 0x4000
-#define MOVE_EXISTS 0x8000
+#define MOVE_CMDDIR 0x8000
 #define MOVE_SOURCEISDIR 0x10000L
+#define MOVE_EXISTS 0x20000L
 
 typedef struct {
     char szSource[MAXFILENAME];
@@ -644,7 +692,7 @@ int mv_cmd(int argc, char **argv)
 
     // check for and remove switches
     // abort if no filename arguments
-    if ( ( GetSwitches( argv[1], "*CDEFHMNPQRSTUV", &(Move.fFlags), 0 ) != 0 ) || ( first_arg( argv[1]) == NULL ) )
+    if ( ( GetSwitches( argv[1], "*CDEFHMNPQRSTUVJ", &(Move.fFlags), 0 ) != 0 ) || ( first_arg( argv[1]) == NULL ) )
         return(usage( MOVE_USAGE ));
 
     // if query before moving, disable MOVE_QUIET & MOVE_TOTALS
@@ -660,7 +708,7 @@ int mv_cmd(int argc, char **argv)
         //   files are being moved to the current (existing!) directory
         Move.fFlags &= ~MOVE_TO_DIR;
 
-        strcpy( Move.szTarget, (( Move.fFlags & MOVE_SUBDIRS ) ? gcdir( NULL, 0 ) : WILD_FILE ));
+        strcpy( Move.szTarget, ((( Move.fFlags & MOVE_SUBDIRS ) || ( Move.fFlags & MOVE_CMDDIR )) ? gcdir( NULL, 0 ) : WILD_FILE ));
     }
 
     // can't move a file to a device or pipe!
@@ -729,7 +777,7 @@ int mv_cmd(int argc, char **argv)
         //   (i.e., "MOVE /S . subdir" )
         arg = path_part( Move.szSource );
         nLength = strlen( arg );
-        if ( Move.fFlags & MOVE_SUBDIRS ) {
+        if ( (Move.fFlags & MOVE_SUBDIRS) || ( Move.fFlags & MOVE_CMDDIR )) {
             if ( _strnicmp( arg, Move.szTarget, nLength ) == 0 ) {
                 rval = error( ERROR_4DOS_INFINITE_MOVE, Move.szSource );
                 break;
@@ -793,6 +841,7 @@ static int _mv(MOVE_STRUCT *Move)
     LONGLONG llAppendOffset = 0LL;            // 20090828 AB LFS
     FILESEARCH dir;
     char *pszLFN;
+    BOOL fNotCmdDir = FALSE;
 
     EnableSignals();
     dir.hdir = INVALID_HANDLE_VALUE;
@@ -807,31 +856,67 @@ static int _mv(MOVE_STRUCT *Move)
     // get hidden & system files too
     if ( ( Move->fFlags & MOVE_BY_ATTRIBUTES ) || ( Move->fFlags & MOVE_HIDDEN) )
         mode |= 0x07;
-
     // if the target is a directory, add a wildcard filename
-    if ( is_dir( Move->szTarget ) )
-        mkdirname( Move->szTarget, WILD_FILE );
 
-    else if ( ( Move->fFlags & MOVE_SUBDIRS ) || ( Move->fFlags & MOVE_TO_DIR ) ) {
-
-        // if moving subdirectories, create the target
-
-        // remove trailing '/' or '\' in target
-        strip_trailing( Move->szTarget+3, SLASHES );
-
-        MakeDirectory( Move->szTarget, 1 );
-        if ( is_dir( Move->szTarget ) == 0 )
-            return( error( ERROR_PATH_NOT_FOUND, Move->szTarget ));
-
-        // move description to newly-created target
-        if ( Move->fFlags & MOVE_SOURCEISDIR ) {
-            copy_filename( Move->szSourceName, path_part( Move->szSource) );
-            strip_trailing( Move->szSourceName+3, SLASHES );
-            process_descriptions( Move->szSourceName, Move->szTarget, DESCRIPTION_COPY );
+    if ( is_dir( Move->szTarget ) ) {
+        if ( ((~Move->fFlags & MOVE_CMDDIR)  && !gpIniptr->CMDDirMvCpy) ||
+            ( (Move->szSource[1] == ':') && ( Move->szSource[3] == '*') ) || (~Move->fFlags & MOVE_SOURCEISDIR)) {
+            mkdirname( Move->szTarget, WILD_FILE );
+            fNotCmdDir = TRUE;
+        }
+        else { // Copy change
+            char *p;
+            PSZ temp = strdup(Move->szSource);
+    
+            p = strrchr(temp, '\\');
+            if ( p ) {
+                *p = '\0';
+                p = strrchr(temp, '\\');
+                if ( !p ) {
+                    strcat(Move->szTarget, "\\");
+                    p = temp;
+                }
+            } else {
+                p = strrchr(temp, '/');
+                if ( p ) {
+                    *p = '\0';
+                    p = strrchr(temp, '/');
+                    if ( !p ) {
+                        strcat(Move->szTarget, "/");
+                        p = temp;
+                    }
+                }
+            }
+            if ( p ) {
+                strcat(Move->szTarget, p);
+            } else {
+                free(temp);
+                return( error( ERROR_PATH_NOT_FOUND, Move->szTarget ));
+            }
+                free(temp);
+        }
+    }
+        if ( !fNotCmdDir /*|| ( Move->fFlags & MOVE_SUBDIRS ) || ( Move->fFlags & MOVE_TO_DIR )*/) {
+    
+            // if moving subdirectories, create the target
+    
+            // remove trailing '/' or '\' in target
+            strip_trailing( Move->szTarget+3, SLASHES );
+    
+            MakeDirectory( Move->szTarget, 1 );
+            if ( is_dir( Move->szTarget ) == 0 )
+                return( error( ERROR_PATH_NOT_FOUND, Move->szTarget ));
+    
+            // move description to newly-created target
+            if ( Move->fFlags & MOVE_SOURCEISDIR ) {
+                copy_filename( Move->szSourceName, path_part( Move->szSource) );
+                strip_trailing( Move->szSourceName+3, SLASHES );
+                process_descriptions( Move->szSourceName, Move->szTarget, DESCRIPTION_COPY );
+            }
+    
+            mkdirname( Move->szTarget, WILD_FILE );
         }
 
-        mkdirname( Move->szTarget, WILD_FILE );
-    }
 
     // suppress error message from find_file
     if ( Move->fFlags & MOVE_NOERRORS )
@@ -994,11 +1079,13 @@ static int _mv(MOVE_STRUCT *Move)
 
     // update the source descript.ion file by deleting descriptions
     //   for any moved or missing files
-    if ( (( Move->fFlags & MOVE_NOTHING ) == 0 ) && (( Move->lFilesMoved != 0L ) || ( Move->fFlags & MOVE_SUBDIRS )) )
+    if ( (( Move->fFlags & MOVE_NOTHING ) == 0 ) && (( Move->lFilesMoved != 0L ) ||
+                                                     ( Move->fFlags & MOVE_SUBDIRS ) ||
+                                                     ( Move->fFlags & MOVE_CMDDIR )) )
         process_descriptions( NULL, Move->szSource, DESCRIPTION_REMOVE );
 
     // move subdirectories too?
-    if ( Move->fFlags & MOVE_SUBDIRS ) {
+    if ( ( Move->fFlags & MOVE_SUBDIRS ) || ( Move->fFlags & MOVE_CMDDIR )) {
         // save the current source filename start
         source_arg = strchr( Move->szSource, '*' );
 
