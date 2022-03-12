@@ -7,7 +7,7 @@
 ARG param
 
 pkgname  = '4os2'
-verstr   = '3.09'
+verstr   = '3.11'
 
 CALL RxFuncAdd 'SysIni', 'REXXUTIL', 'SysIni'
 
@@ -54,13 +54,17 @@ IF RC > retcode THEN retcode = RC
 IF RC > retcode THEN retcode = RC
 '@wic.exe' fullpkg '-a 1 -c' || distdir '4os2.inf'          exeflag
 IF RC > retcode THEN retcode = RC
-'@wic.exe' fullpkg '-a 1 -c' || distdir '4os2.ini.sample'   exeflag
+'@wic.exe' fullpkg '-a 1 -c' || distdir '4os2.ini.tpl'      exeflag
 IF RC > retcode THEN retcode = RC
 '@wic.exe' fullpkg '-a 1 -c' || distdir '4os2.txt'          exeflag
 IF RC > retcode THEN retcode = RC
+'@wic.exe' fullpkg '-a 1 -c' || distdir '4os2alias.sample'  exeflag
+IF RC > retcode THEN retcode = RC
 '@wic.exe' fullpkg '-a 1 -c' || distdir '4os2h.msg'         exeflag
 IF RC > retcode THEN retcode = RC
-'@wic.exe' fullpkg '-a 1 -c' || distdir '4start.cmd.sample' exeflag
+'@wic.exe' fullpkg '-a 1 -c' || distdir '4start.cmd.tpl'    exeflag
+IF RC > retcode THEN retcode = RC
+'@wic.exe' fullpkg '-a 1 -c' || distdir '4start.cmd.tpl2'   exeflag
 IF RC > retcode THEN retcode = RC
 '@wic.exe' fullpkg '-a 1 -c' || distdir 'changelog'         exeflag
 IF RC > retcode THEN retcode = RC

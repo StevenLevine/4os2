@@ -1,4 +1,4 @@
-<!-- 4OS/2 3.9.0 installation profile for WarpIN -->
+<!-- 4OS/2 3.11.0 installation profile for WarpIN -->
 
 <WARPIN VERSION="1.0.12" CODEPAGE=850>
 
@@ -7,7 +7,7 @@
 <TITLE>4OS/2</TITLE>
 
 <PCK INDEX=1
-     PACKAGEID="JP Software\4OS/2\Base\3\9\0"
+     PACKAGEID="JP Software\4OS/2\Base\3\11\0"
      TITLE="4OS/2 Base"
      TARGET="$(WARPIN_DEFAULTTOOLSPATH)\4OS2"
      BASE
@@ -23,8 +23,8 @@
      CONFIGSYS="SET HELP=$(1); | ADDRIGHT"
      CONFIGSYS="SET BOOKSHELF=$(1); | ADDRIGHT"
      CONFIGSYS="LIBPATH=$(1); | ADDRIGHT"
-     EXECUTE="if not exist $(1)\4start.cmd copy $(1)\4start.cmd.sample $(1)\4start.cmd"
-     EXECUTE="if not exist $(1)\4OS2.INI copy $(1)\4OS2.INI.sample $(1)\4OS2.INI"
+     EXECUTE="if not exist $(1)\4start.cmd copy $(1)\4start.cmd.tpl $(1)\4start.cmd"
+     EXECUTE="if not exist $(1)\4OS2.INI copy $(1)\4OS2.INI.tpl $(1)\4OS2.INI"
      >This package contains the 4OS/2 Base Package.
 </PCK>
 
