@@ -10,6 +10,7 @@
 .nameit symbol=8ver     text='3.08'
 .* .nameit symbol=8ver     text='3.08'
 .nameit symbol=9ver     text='3.09'
+.nameit symbol=10ver     text='3.10'
 
 .* Use this to reference current version
 .nameit symbol=curver     text='3.09.1'
@@ -37,6 +38,7 @@ Help Text Copyright 1993 - 2004, JP Software Inc., All Rights Reserved.
 Software Copyright 1988 - 2004, Rex Conn and JP Software Inc., All Rights
 Reserved.
 :p.
+
 4DOS, 4OS2, and 4NT are JP Software Inc.'s trademarks for its family of
 character-mode command processors.  4DOS and Take Command are registered
 trademarks of JP Software Inc.  JP Software, jpsoft.com, and all JP
@@ -103,9 +105,9 @@ key together with the other key named)&colon.
 :hp2.Cursor Movement Keys&colon.:ehp2.
 :lm margin=8.:parml compact tsize=16 break=fit.
 :pt.:hp2.:ehp2.:pd.Move the cursor left one character.
-:pt.:hp2.:ehp2.:pd.Move the cursor right one character.
+:pt.:hp2.:ehp2.:pd.Move the cursor right one character.
 :pt.:hp2.Ctrl :ehp2.:pd.Move the cursor left one word.
-:pt.:hp2.Ctrl :ehp2.:pd.Move the cursor right one word.
+:pt.:hp2.Ctrl :ehp2.:pd.Move the cursor right one word.
 :pt.:hp2.Ctrl /:ehp2.:pd.Temporarily move the cursor up/down. If the PM window is too small to hold all lines this effectively scrolls the window contents.
 The cursor automatically jumps back to the previous position as soon as any other key is pressed.
 :pt.:hp2.Home:ehp2.:pd.Move the cursor to the beginning of the line.
@@ -156,7 +158,7 @@ is the caret [:hp2.^:ehp2.].  For example&colon.
         More? sleeping dog. > alphabet
 :exmp.
 :p.
-Note that you will often need to prefix the escape charater with a space
+Note that you will often need to prefix the escape character with a space
 to get the results you want.
 :p.
 One limitation of this technique is that you can only edit the text you entered
@@ -315,7 +317,7 @@ shell, use a global history list in both shells.
 :pt.:hp2.&uarrow.:ehp2.:pd.Scroll the display up one line.
 :pt.:hp2.&darrow.:ehp2.:pd.Scroll the display down one line.
 :pt.:hp2.:ehp2.:pd.Scroll the display left 4 columns.
-:pt.:hp2.:ehp2.:pd.Scroll the display right 4 columns.
+:pt.:hp2.:ehp2.:pd.Scroll the display right 4 columns.
 :pt.:hp2.PgUp:ehp2.:pd.(inside the window) Scroll the display up one page.
 :pt.:hp2.PgDn:ehp2.:pd.(inside the window) Scroll the display down one page.
 :pt.:hp2.Ctrl-PgUp:ehp2.:pd.Go to the beginning of the history list.
@@ -371,7 +373,7 @@ could be valid commands&colon.
 The last three commands above include both a command name, and one or
 more parameters.  There are no spaces within the command name (except in
 quoted file names), but there is a space between the command name and
-any parameeters, and there are spaces between the parameters.
+any parameters, and there are spaces between the parameters.
 :p.
 Some commands may work when parameters are entered directly after the
 command (without an intervening space, :hp1.e.g.:ehp1. :hp2.dir/p:ehp2.), or when several
@@ -593,7 +595,7 @@ customizing window position, size, and color.
 :pt.:hp2.&uarrow.:ehp2.:pd.Scroll the display up one line.
 :pt.:hp2.&darrow.:ehp2.:pd.Scroll the display down one line.
 :pt.:hp2.:ehp2.:pd.Scroll the display left 4 columns.
-:pt.:hp2.:ehp2.:pd.Scroll the display right 4 columns.
+:pt.:hp2.:ehp2.:pd.Scroll the display right 4 columns.
 :pt.:hp2.PgUp:ehp2.:pd.Scroll the display up one page.
 :pt.:hp2.PgDn:ehp2.:pd.Scroll the display down one page.
 :pt.:hp2.Ctrl-PgUp:ehp2.:pd.Go to the beginning of the filename list.
@@ -665,7 +667,7 @@ which is two levels "up" from the current directory in the tree.
 :pt.:hp2.&uarrow.:ehp2.:pd.Scroll the display up one line.
 :pt.:hp2.&darrow.:ehp2.:pd.Scroll the display down one line.
 :pt.:hp2.:ehp2.:pd.Scroll the display left 4 columns.
-:pt.:hp2.:ehp2.:pd.Scroll the display right 4 columns.
+:pt.:hp2.:ehp2.:pd.Scroll the display right 4 columns.
 :pt.:hp2.PgUp:ehp2.:pd.Scroll the display up one page.
 :pt.:hp2.PgDn:ehp2.:pd.Scroll the display down one page.
 :pt.:hp2.Ctrl-PgUp:ehp2.:pd.Go to the beginning of the directory list.
@@ -1723,7 +1725,7 @@ will be created automatically the first time it is required, and will include
 all local hard drives.
 :p.
 The database is stored in the file :hp1.JPSTREE.IDX:ehp1., which is placed in
-the root directory of drive C&colon. by default.  The same tree file is used
+the 4OS2 directory&colon. by default.  The same tree file is used
 by all JP Software command processors.  You can specify a different location
 for this file on the Command Line 2 page of the :link reftype=hd
 refid=OPTION.OPTION:elink. dialogs, or with the :link reftype=hd
@@ -2794,7 +2796,7 @@ series of commands with a few keystrokes or to create "in memory
 batch files" that run much faster than disk-based batch files.
 :p.
 For example, to create a single-letter command D to display a wide directory,
-instead of useing the longer DIR /W, you could use the command&colon.
+instead of using the longer DIR /W, you could use the command&colon.
 :xmp.
         [c&colon.\] alias d = dir /w
 :exmp.:p.
@@ -3128,7 +3130,7 @@ the alias will display&colon.
 You can expand an alias on the command line and view or edit the results by
 pressing :hp2.Ctrl-F:ehp2. after typing the alias name, but before the
 command is executed.  This replaces the alias with its contents, and
-substitutes values for each alias paramter, just as if you had pressed the
+substitutes values for each alias parameter, just as if you had pressed the
 :hp2.Enter:ehp2. key.  However, the command is not executed; it is simply
 redisplayed on the command line for additional editing.
 :p.
@@ -6097,7 +6099,7 @@ contain the string :hp1.color:ehp1., you could use this command instead&colon.
 :exmp.:p.
 The output from this command is a list of files that contain the
 string :hp1.color:ehp1. along with the first line in each file that contains
-that string.  By default, FFIND uses a case-insensitve search, so the command
+that string.  By default, FFIND uses a case-insensitive search, so the command
 above will include files that contain :hp1.COLOR:ehp1., :hp1.Color:ehp1.,
 :hp1.color:ehp1., or any other combination of upper-case and lower-case
 letters.
@@ -6767,7 +6769,7 @@ directories are ignored.
 specified, GLOBAL will terminate if the command returns a non-zero exit
 code.  Use :hp2./I:ehp2. if you want the command to continue in additional
 subdirectories even if it returns an error in one subdirectory.  Even
-if you use :hp2./I:ehp2., GLOBAL will hnormally alt execution if the command
+if you use :hp2./I:ehp2., GLOBAL will normally alt execution if the command
 processor receives a :hp2.Ctrl-C:ehp2. or :hp2.Ctrl-Break:ehp2..
 :pt.:hp2./P:ehp2.&colon.:pd.(Prompt) Forces GLOBAL to prompt with each directory name
 before it performs the command.  Your options at the
@@ -7372,7 +7374,7 @@ external command, and the existence of alias names and internal
 commands.
 :p.
 See the :link reftype=hd refid=IF.IF:elink. command for a list of the possible
-:hp1.conditions:ehp1., and details on useing :hp2..AND.:ehp2., :hp2..OR.:ehp2.,
+:hp1.conditions:ehp1., and details on using :hp2..AND.:ehp2., :hp2..OR.:ehp2.,
 :hp2..XOR.:ehp2., and parentheses.
 :p.
 The :hp1.commands:ehp1. can include any internal command, alias, external
@@ -7818,7 +7820,7 @@ tells the program the buffer is clear, so subsequent keystrokes will be
 accepted normally.  Some programs will require several "0"s before they will
 accept input; you may need to experiment to determine the correct number.
 :p.
-For example, the following batch file starts a spreadsheet programand loads
+For example, the following batch file starts a spreadsheet program and loads
 the file specified on the command line when the batch file is invoked (the
 KEYSTACK command should be entered on one line)&colon.
 :xmp.
@@ -7935,9 +7937,9 @@ keys have special meanings&colon.
 :pt.:hp2.&uarrow.:ehp2.:pd.Scroll up one line.
 :pt.:hp2.&darrow.:ehp2.:pd.Scroll down one line.
 :pt.:hp2.:ehp2.:pd.Scroll left 8 columns.
-:pt.:hp2.:ehp2.:pd.Scroll right 8 columns.
+:pt.:hp2.:ehp2.:pd.Scroll right 8 columns.
 :pt.:hp2.Ctrl :ehp2.:pd.Scroll left 40 columns.
-:pt.:hp2.Ctrl :ehp2.:pd.Scroll right 40 columns.
+:pt.:hp2.Ctrl :ehp2.:pd.Scroll right 40 columns.
 :pt.:hp2.F1:ehp2.:pd.Display online help
 :pt.:hp2.B:ehp2.:pd.Go back one file to the previous file in the current
 group of files.
@@ -10375,7 +10377,7 @@ processing a text file containing special characters&colon.
 :exmp.
 .br
 :pt.:hp2./Y&colon.:ehp2.:pd.(debug batch file) :hp2./Y1:ehp2. enables the
-built-in batch file debugger.  The debuggger allows you to "single-step"
+built-in batch file debugger.  The debugger allows you to "single-step"
 through a batch file line by line, with the file displayed in a popup window
 as it executes.  For complete details on using the debugger see
 :link reftype=hd refid=BatchDebug.Debugging Batch Files:elink. (this topic
@@ -10489,11 +10491,11 @@ Executing :hp1.TEST.BAT:ehp1. produces the following results&colon.
         three four five six
 :exmp.:p.
 If you add a slash before the value :hp1.n:ehp1., the value determines the
-postion at which to begin the shift.  For example&colon.
+position at which to begin the shift.  For example&colon.
 :xmp.
         shift /2
 :exmp.:p.
-leaves parameters %0 and %1 unchanged, and moves the value of %3 to postion
+leaves parameters %0 and %1 unchanged, and moves the value of %3 to position
 %2, %4 to %3, etc.  The value after the slash cannot be negative, and shifts
 performed with the slash cannot be undone later in the batch file.
 
@@ -11262,7 +11264,7 @@ ready," will still be displayed.  This option is most useful in batch files.
 attribute from each file before changing the date and time, and restore it
 afterwards.  Without :hp2./F:ehp2., attempting to change the date and time
 on a read-only file will usually cause an error.
-:pt.:hp2./Q:ehp2.&colon.:pd.(Quiet) Do not dislpy the new date and time and
+:pt.:hp2./Q:ehp2.&colon.:pd.(Quiet) Do not display the new date and time and
 the full name for each file.
 :pt.:hp2./T:ehp2.&colon.:pd.(Time) Specify the time that will be set for the
 selected files, in hh&colon.mm format.  If the time is not specified, TOUCH
@@ -12730,13 +12732,13 @@ The default escape character is the caret [:hp2.^:ehp2.].  For example&colon.
         dog. > alphabet
 :exmp.
 :p.
-Note that you will often need to prefix the escape charater with a space
+Note that you will often need to prefix the escape character with a space
 to get the results you want.
 :p.
 You cannot use this technique to extend a batch file line beyond the normal
 line length limit of 1,023 characters.
 :p.
-This techinque also works for commands entered on the command line.
+This technique also works for commands entered on the command line.
 
 .* --------------------------------------------------------------------------
 
@@ -12891,7 +12893,7 @@ character was set.  To work around this, use the escape character variable
 not treated with any special meaning.
 :p.
 For example, the following sequence of commands in a batch file will always
-set the special characters correctly to their standard 4DOS values, no
+set the special characters correctly to their standard 4OS2 values, no
 matter what their current setting, and will restore them when the batch file
 is done&colon.
 :xmp.
@@ -12936,7 +12938,7 @@ command line
 :exmp.:p.
 the command name is "dir", and the command tail is " *.txt /2/p/v".
 :p.
-Next 4DOS tries to match the command name against its list of aliases.  If it
+Next 4OS2 tries to match the command name against its list of aliases.  If it
 finds a match between the command name and one of the aliases you've defined,
 it replaces the command name with the contents of the alias.  (This
 substitution is done internally and is not normally visible to you).  However,
@@ -13137,7 +13139,7 @@ more information on any aspect of REXX, see your REXX documentation.
 
 :h2 name=EXTPROC.EXTPROC Support
 :p.
-For compatiblility with :hp1.CMD.EXE:ehp1., 4OS2 offers an external
+For compatibility with :hp1.CMD.EXE:ehp1., 4OS2 offers an external
 processor (EXTPROC) option for batch files that lets you define an external
 program to process a particular :hp1..CMD:ehp1. file.  To identify a
 :hp1..CMD:ehp1. file to be used with an external processor, place the
@@ -14286,9 +14288,10 @@ argument.  To set the thousands separator see the
 :p.
 Functions which accept a date as an argument use the date format and
 separators mandated by your country code (for example dd.mm.yy in Germany, or
-yy-mm-dd in Japan).  The year can be entered as a 4-digit or 2-digit
-value.  Two-digit years between 80 and 99 are interpreted as 1980 - 1999;
-values between 00 and 79 are interpreted as 2000 - 2079.
+yy-mm-dd in Japan) or the date format you specify in the INI file.  The year 
+can be entered as a 4-digit or 2-digit value.  Two-digit years between 80 and 
+99 are interpreted as 1980 - 1999; values between 00 and 79 are interpreted as 
+2000 - 2079.
 :p.
 Several functions return filenames or parts of filenames.  On an HPFS
 drive the strings returned by these functions may contain whitespace
@@ -14298,14 +14301,15 @@ commands, for example (either of these methods would work)&colon.
 :xmp.
         set fname="%@findfirst[pro*.*]"
         echo First PRO file contains&colon.
-        type %fname
+        type &percent.fname
         .....
 
         set fname=%@findfirst[pro*.*]
         echo First PRO file contains&colon.
         type "%fname"
         .....
-:exmp.:p.
+:exmp.
+:p.
 If you don't use the quotes in the :link reftype=hd refid=SET.SET:elink. or
 :link reftype=hd refid=TYPE.TYPE:elink. command in this example, TYPE
 will not interpret any whitespace or special characters in the name properly.
@@ -14499,9 +14503,10 @@ convert "1010101" from binary to decimal, use this syntax&colon.
 :hp2.@DATE[mm-dd-yy]:ehp2.&colon.  Returns the number of days since January 1,
 1980 for the specified date.  DATE uses the date format and
 separators mandated by your country code (for example dd.mm.yy in
-Germany, or yy-mm-dd in Japan).  The year can be entered as a 4-digit or
-2-digit value.  Two-digit years between 80 and 99 are interpreted as 1980 -
-1999; values between 00 and 79 are interpreted as 2000 - 2079.
+Germany, or yy-mm-dd in Japan) or the date format you specify in the INI file 
+using DateFmt=. The year can be entered as a 4-digit or 2-digit value.  
+Two-digit years between 80 and 99 are interpreted as 1980 - 1999; 
+values between 00 and 79 are interpreted as 2000 - 2079.
 
 .* --------------------------------------------------------------------------
 
@@ -14509,10 +14514,10 @@ Germany, or yy-mm-dd in Japan).  The year can be entered as a 4-digit or
 :p.
 :hp2.@DAY[mm-dd-yy]:ehp2.&colon.  Returns the numeric day of the month for the
 specified date.  DATE uses the date format and separators mandated by your
-country code (for example dd.mm.yy in Germany, or yy-mm-dd in Japan).  The
-year can be entered as a 4-digit or 2-digit value.  Two-digit years between
-80 and 99 are interpreted as 1980 - 1999; values between 00 and 79 are
-interpreted as 2000 - 2079.
+country code (for example dd.mm.yy in Germany, or yy-mm-dd in Japan) the date 
+format you specify in the INI file.  The year can be entered as a 4-digit or 
+2-digit value.  Two-digit years between 80 and 99 are interpreted as 1980 - 1999; 
+values between 00 and 79 are interpreted as 2000 - 2079.
 
 .* --------------------------------------------------------------------------
 
@@ -16041,7 +16046,7 @@ assumes that the file is named :hp1.SWAPPER.DAT:ehp1. and stored in the
 :hp2.TreePath:ehp2. = Path&colon.  Sets the location of
 :hp1.JPSTREE.IDX:ehp1., the file used for :link reftype=hd
 refid=ExtDirSearch.extended directory searches:elink. By default, the file is
-placed in the root directory of drive C&colon.\.
+placed in the 4OS2 directory&colon.\.
 
 .* --------------------------------------------------------------------------
 
@@ -16069,7 +16074,7 @@ pixels or pels.  :hp2.WindowX:ehp2. and :hp2.WindowY:ehp2. refer to the
 position of the bottom left corner of the window relative to the bottom left
 corner of the screen.
 :p.
-These settings are actived only if :hp2.WindowState:ehp2. Custom is also set.
+These settings are active only if :hp2.WindowState:ehp2. Custom is also set.
 :p.
 The :link reftype=hd refid=OPTION.OPTION:elink. command can be used to dynamically position and
 resize the window:
@@ -16114,6 +16119,7 @@ each directive.  The configuration directives are&colon.
 :pt.:link reftype=hd refid=INI_HistLogName.HistLogName:elink.:pd.History log file name
 :pt.:link reftype=hd refid=INI_HistMin.HistMin:elink.:pd.Minimum command length to save
 :pt.:link reftype=hd refid=INI_HistMove.HistMove:elink.:pd.History move mode
+:pt.:link reftype=hd refid=INI_HistNoDups.HistNoDups:elink.:pd.History no duplicates mode
 :pt.:link reftype=hd refid=INI_HistWrap.HistWrap:elink.:pd.History wrap mode
 :pt.:link reftype=hd refid=INI_LineInput.LineInput:elink.:pd.Enable / disable line input mode
 :pt.:link reftype=hd refid=INI_ListRowStart.ListRowStart:elink.:pd.Starting row number for LIST and FFIND
@@ -16230,17 +16236,17 @@ even without leading cd and trailing backslash (\).
 :p.
 Directory change by typing in the directory name without cd is now possible
 even without leading backslash (\). Backslash on some keyboard layouts (like
-the german one) is not that easy to type.
+the German one) is not that easy to type.
 :p.
-If you want the old behaviour, disable it with 4os2.ini file entry
+If you want the old behavior, disable it with 4os2.ini file entry
 CDWithoutBackslash=0
 :p.
 With CDWithoutBackslash=1 (default), directory change takes place only if
-no executable with the same name exist (4nt8 behaviour)
+no executable with the same name exist (4nt8 behavior)
 :p.
 With CDWithoutBackslash=2 a directory change is made before checking for an
-external executable with the same name (cmdshl behaviour). Of course you
-can start such an executcable by typing the name with extension f.i.
+external executable with the same name (cmdshl behavior). Of course you
+can start such an executable by typing the name with extension f.i.
 name.exe or name.cmd.
 
 .* --------------------------------------------------------------------------
@@ -16472,6 +16478,13 @@ This directive has no effect if HistCopy = Yes.
 
 .* --------------------------------------------------------------------------
 
+:h4 name=INI_HistNoDups.HistNoDups
+:p.
+:hp2.HistNoDups:ehp2. = Yes &splitvbar. NO&colon.  If set to Yes, when you type a 
+command that is already in the history the duplicate command will not be added to 
+the history list. 
+.* --------------------------------------------------------------------------
+
 :h4 name=INI_HistWrap.HistWrap
 :p.
 :hp2.HistWrap = :ehp2.YES &splitvbar. No&colon.  Controls whether the
@@ -16611,12 +16624,12 @@ in the shadow area while viewing the window.
 :hp2.PopupWinPosRelative:ehp2. = YES &splitvbar. No&colon.  Determines whether 4OS2
 should place the popup window relative to the current cursor position.
 :p.
-The positon of popup windows is defined in the options dialog. If PopupWinPosRelative=YES (default),
-popup windows are positioned relative to the current cursor line. Otherwise the positon is defined
+The position of popup windows is defined in the options dialog. If PopupWinPosRelative=YES (default),
+popup windows are positioned relative to the current cursor line. Otherwise the position is defined
 by the top of the window.
 :p.
 If PopupWinPosRelative=YES you can use negative values to place popup windows below the current cursor line.
-Of course popup windows can not be placed outside the current window. The positon is dynamically adopted to fit
+Of course popup windows can not be placed outside the current window. The position is dynamically adopted to fit
 into the window if the specified value would go beyond boundaries.
 
 .* --------------------------------------------------------------------------
@@ -17491,7 +17504,7 @@ file, and ignore any :hp2.[Secondary]:ehp2. section in the original
 
 :h2 name=INIExamples..INI File Examples
 :p.
-This example configures certain special characters to match 4DOS, and
+This example configures certain special characters to match 4OS2, and
 changes other default settings to suit the user's preferences.  Note that
 the comments for the :link reftype=hd refid=INI_HelpBook.HelpBook:elink. and
 :link reftype=hd refid=INI_ColorDir.ColorDir:elink. directives are on
@@ -17501,8 +17514,8 @@ in string directives&colon.
         [4OS2]
         InstallPath = c&colon.\4OS2300      ;installation directory
         PauseOnError = No             ;don't stop on INI errors
-        CommandSep = ^                ;4DOS command separator
-        ParameterChar = &amp.             ;4DOS parameter character
+        CommandSep = ^                ;4OS2 command separator
+        ParameterChar = &amp.         ;4OS2 parameter character
         BatchEcho = No                ;default to ECHO OFF
                                       ;show only 4OS2 help for F1 / HELP
         HelpBook = 4OS2
@@ -18204,20 +18217,20 @@ No additional help available. Volunteers needed to fill this page with links to 
 
 .* --------------------------------------------------------------------------
 
-:h1 name=WhatsNew.What's New?
+:h1 name=WhatsNew.What's New? - Change History
 :p.
 This section provides a comprehensive list of what's changed since our
 previous major release, version 2.52.  Maintenance changes made between
-versions 3.00 and &4ver. are indicated notes in the left margin (such as
-:hp2.&4ver.:ehp2.).
+versions 3.00 and &10ver. are indicated notes in the left margin (such as
+:hp2.&4ver.:ehp2.). :hp8.Changes after version &4verprev. were not made by JP 
+Software.:ehp8. 
 :p.
 This topic does not explain how to use each new feature.  Instead, where
 appropriate we have provided links below to the detailed help topics
 containing additional usage information or other documentation.
 :p.
 Some of the descriptions here may be more detailed than you need; if you
-aren't using a feature, feel free to skip to the next item.  If you are new
-to 4OS2 with version &4ver., you can skip this topic entirely.
+aren't using a feature, feel free to skip to the next item.
 :p.
 This topic is divided into the following subtopics&colon.
 :lm margin=8.:parml tsize=4 compact break=fit.
@@ -18231,7 +18244,7 @@ Enhancements:elink.
 :pt.:pd.:link reftype=hd refid=NewBugs.Bugs Fixed:elink.
 :eparml.:lm margin=1.
 :p.
-The major new features in this release include&colon.
+The major new features in the last JP Software release include&colon.
 :lm margin=4.:parml tsize=4 break=fit.
 :pt.¯:pd.:link reftype=hd refid=ExtDirSearch.Extended Directory
 Searches:elink.&colon.  allow you to change to a directory anywhere on your
@@ -18264,7 +18277,16 @@ directory tree, with or without file names, in a variety of formats.
 :h2 name=NewGen.General Features and Enhancements
 :p.
 :hp2.What's New - General Features and Enhancements:ehp2.
+:lm margin=1.:parml tsize=10 break=fit.
+:pt.:hp2.&10ver. :ehp2.  ¯:pd.The default location for :hp1.JPSTREE.IDX:ehp1. has been
+changes to the 4OS2 install directory if writable else to the root of the boot drive. 
+This location is written to the TreePath variable in 4OS2.INI. If :hp1.JPSTREE.IDX:ehp1. 
+already exists it is left where it was already placed.
+:pt.:hp2.&10ver. :ehp2.  ¯:pd.Add the Shift-Ins key combinations as an 
+option to paste text.
+:eparml.
 :lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made by JP Software prior to version 3.01:ehp8.
 :pt.¯:pd.Added a complete batch file debugger.  The debugger displays the
 batch file in a window and allows you to execute each line step by step,
 process or trace into additional batch files and subroutines, and display
@@ -18313,13 +18335,20 @@ compressed :hp1..BTMs:ehp1. still have to be less than 64K.
 :h2 name=NewCmdLine.Command Line Editing
 :p.
 :hp2.What's New - Command Line Editing:ehp2.
-:lm margin=8.:parml tsize=3 break=fit.
+:lm margin=1.:parml tsize=10 break=fit.
+:pt.:hp2.&10ver.:ehp2.  ¯:pd.Duplicate entries in 
+:link reftype=hd refid=CmdHist.history recall:elink. can be suppressed
+by adding :link reftype=hd refid=INI_HistNoDups.HistNoDups:elink.=Yes to the 
+INI file. They are not removed from saved histories that contain dups.
+:eparml.
+:lm margin=6.:parml tsize=3 break=fit. 
+:pt.:hp8.The following changes were made by JP Software prior to version 3.01:ehp8.
 :pt.¯:pd.:link reftype=hd refid=ExtDirSearch.Extended directory
 searches:elink. can be used directly from the command line for quick
 directory navigation; see :link reftype=hd refid=AutoDir.Automatic Directory
 Changes:elink. or :link reftype=hd refid=DirNav.Directory Navigation:elink.
 for details.
-:pt.¯:pd.Made several ehancements to :link reftype=hd
+:pt.¯:pd.Made several enhancements to :link reftype=hd
 refid=FileComp.filename completion:elink., including&colon.
 :parml tsize=4 break=fit.
 :pt.*:pd.The Ctrl-A key, which toggles between long and short
@@ -18349,7 +18378,29 @@ through the configuration dialogs.
 :h2 name=NewCommands.Command Changes
 :p.
 :hp2.What's New - Command Changes:ehp2.
+:lm margin=1.:parml tsize=10 break=fit.
+.* 2013-04-25 SHL
+:pt.:hp2.3.09:ehp2.  ¯:pd.Added :link reftype=hd refid=INI_DirHistory.DirHistory:elink. memory usage to :link reftype=hd refid=MEMORY.MEMORY:elink. command output.
+.* 2013-09-19 SHL
+:pt.:hp2.3.09:ehp2.  ¯:pd.Added #! as :link reftype=hd refid=EXTPROC.EXTPROC:elink. equivalent if :link reftype=hd refid=INI_UnixPaths.UnixPaths:elink. enabled.
+:eparml.
 :lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made by JP Software:ehp8..
+:eparml.
+:lm margin=1.:parml tsize=10 break=fit.
+:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd refid=CD.CD:elink. and
+:link reftype=hd refid=CDD.CDD:elink.&colon.  Added the :hp2./N:ehp2.
+switch to disable extended directory searches and the change directory
+popup window (intended primarily for use in batch files).
+:pt.:hp2.3.01:ehp2.  ¯:pd.:link reftype=hd refid=FFIND.FFIND:elink.&colon.  Added support for
+piping into FFIND.  You can either specify CON for the filename, or if no
+filename is specified FFIND will detect whether STDIN is a pipe and use that.
+:pt.:hp2.3.01:ehp2.  ¯:pd.:link reftype=hd refid=TOUCH.TOUCH:elink.&colon.  /T[acw] and
+/D[acw] now default to the current date and time.  Previously when the "a",
+"c", or "w" was specified the date or time had to be specified also.
+:eparml.
+:lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made prior to version 3.01:ehp8.
 :pt.¯:pd.:link reftype=hd refid=ACTIVATE.ACTIVATE:elink.&colon.  This
 new command switches to another window.
 :pt.¯:pd.:link reftype=hd refid=ATTRIB.ATTRIB:elink.&colon.  Added the /E
@@ -18361,7 +18412,7 @@ it directly to the ATTRIB command.
 refid=CDD.CDD:elink.&colon.  Now support extended directory searches, which
 allow you to change to a directory anywhere on your system by entering only
 part of its name.  The CDD /S switch builds the extended directory search
-database.  Extended directory searches mmust be explicitly enabled before
+database.  Extended directory searches must be explicitly enabled before
 you can use them.  See :link reftype=hd refid=DirNav.Directory
 Navigation:elink. for complete details.
 :pt.¯:pd.:link reftype=hd refid=CDD.CDD:elink.&colon.  Added the /A switch to
@@ -18542,25 +18593,6 @@ switch to read a file of aliases to remove.
 :pt.¯:pd.:link reftype=hd refid=UNSET.UNSET:elink.&colon.  Added the /R
 switch to read a file of variables to remove.
 :eparml.
-:lm margin=1.:parml tsize=10 break=fit.
-:pt.:hp2.3.01:ehp2.  ¯:pd.:link reftype=hd refid=FFIND.FFIND:elink.&colon.  Added support for
-piping into FFIND.  You can either specify CON for the filename, or if no
-filename is specified FFIND will detect whether STDIN is a pipe and use that.
-:pt.:hp2.3.01:ehp2.  ¯:pd.:link reftype=hd refid=TOUCH.TOUCH:elink.&colon.  /T[acw] and
-/D[acw] now default to the current date and time.  Previously when the "a",
-"c", or "w" was specified the date or time had to be specified also.
-:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd refid=CD.CD:elink. and
-:link reftype=hd refid=CDD.CDD:elink.&colon.  Added the :hp2./N:ehp2.
-switch to disable extended directory searches and the change directory
-popup window (intended primarily for use in batch files).
-:pt.:pd.
-:pt.:hp8.The following changes were not made by JP Software:ehp8.
-:pt.:pd.
-.* 2013-04-25 SHL
-:pt.:hp2.3.09:ehp2.  ¯:pd.Added :link reftype=hd refid=INI_DirHistory.DirHistory:elink. memory usage to :link reftype=hd refid=MEMORY.MEMORY:elink. command output.
-.* 2013-09-19 SHL
-:pt.:hp2.3.09:ehp2.  ¯:pd.Added #! as :link reftype=hd refid=EXTPROC.EXTPROC:elink. equivalent if :link reftype=hd refid=INI_UnixPaths.UnixPaths:elink. enabled.
-:eparml.
 
 .* --------------------------------------------------------------------------
 
@@ -18570,6 +18602,14 @@ popup window (intended primarily for use in batch files).
 Added or updated the following internal variables (all variables listed are
 new unless otherwise noted)&colon.
 :lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made by JP Software:ehp8..
+:eparml.
+:lm margin=1.:parml tsize=10 break=fit.
+:pt.:hp2.3.01:ehp2.  ¯:pd.:link reftype=hd refid=_CMDPROC._CMDPROC:elink.&colon.  Returns
+the name of the current command processor.
+:eparml.
+:lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made prior to version 3.01:ehp8.
 :pt.¯:pd.:link reftype=hd refid=_APMAC._APMAC:elink.&colon.  Advanced Power
 Management AC line status.
 :pt.¯:pd.:link reftype=hd refid=_APMBATT._APMBATT:elink.&colon.  Advanced
@@ -18584,16 +18624,22 @@ current day of week as an integer (Sun = 1, Mon = 2, etc.).
 physical screen horizontal size in pixels.
 :pt.¯:pd.:link reftype=hd refid=_YPIXELS._YPIXELS:elink.&colon.  Returns the
 physical screen vertical size in pixels.
-:eparml.:lm margin=1.
-:lm margin=1.:parml tsize=10 break=fit.
-:pt.:hp2.3.01:ehp2.  ¯:pd.:link reftype=hd refid=_CMDPROC._CMDPROC:elink.&colon.  Returns
-the name of the current command processor.
 :eparml.
 :p.
 :p.
+:lm margin=1.
 Added or updated the following variable functions (all functions listed are
 new unless otherwise noted)&colon.
 :lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made by JP Software:ehp8..
+:eparml.
+:lm margin=1.:parml tsize=10 break=fit.
+:pt.:hp2.3.01:ehp2.  ¯:pd.:link reftype=hd refid=_@EAWRITE.@EAWRITE:elink.[filename,EAname,[value]]&colon.
+You can now delete an EA by specifying an empty third argument (i.e.,
+"%@earead[filename,.subject,]).
+:eparml.
+:lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made prior to version 3.01:ehp8.
 :pt.¯:pd.:link reftype=hd refid=_@CLIP.@CLIP:elink.[n]&colon.  Returns line
 :hp2.n:ehp2. from the clipboard (base 0).
 :pt.¯:pd.:link reftype=hd
@@ -18668,18 +18714,57 @@ they don't.
 :pt.¯:pd.:link reftype=hd refid=_@YEAR.@YEAR:elink.[date]&colon.  Return the
 year for the specified :hp2.date:ehp2..
 :eparml.
-:lm margin=1.:parml tsize=10 break=fit.
-:pt.:hp2.3.01:ehp2.  ¯:pd.:link reftype=hd refid=_@EAWRITE.@EAWRITE:elink.[filename,EAname,[value]]&colon.
-You can now delete an EA by specifying an empty third argument (i.e.,
-"%@earead[filename,.subject,]).
-:eparml.
 
 .* --------------------------------------------------------------------------
 
 :h2 name=NewStartup.Startup and Configuration
 :p.
 :hp2.What's New - Startup and Configuration:ehp2.
+:lm margin=1.:parml tsize=10 break=fit.
+:pt.:hp2.&10ver. :ehp2. ¯:pd.:link reftype=hd refid=INI_HistNoDups.HistNoDups:elink. = 
+Yes &splitvbar. NO&colon.  If set to Yes, when you type a command that is already 
+in the history the duplicate command will not be added to the history list. 
+.* 2013-04-25 SHL
+:pt.:hp2.3.09:ehp2.  ¯:pd.Changed default :link reftype=hd refid=INI_History.History:elink. buffer size to 4092.
+:pt.:hp2.3.09:ehp2.  ¯:pd.Changed default :link reftype=hd refid=INI_DirHistory.DirHistory:elink. buffer size to 4092.
+
+:pt.:hp2.3.06:ehp2.  ¯:pd.Added bldlevel to .exe and .dll files.
+:pt.:hp2.3.06:ehp2.  ¯:pd.Added help for options dialog.
+:pt.:hp2.3.06:ehp2.  ¯:pd.Fixed TitleIsCurDir behavior (partly reverted SHLs changes).
+:pt.:hp2.3.06:ehp2.  ¯:pd.Changed version numbering to digits only.
+:pt.:hp2.3.05a:ehp2.  ¯:pd.:link reftype=hd refid=INI_TitleIsCurDir.TitleIsCurDir:elink.=
+YES &splitvbar.  No&colon.  Enables current path as OS/2 session title
+:pt.:hp2.3.05a:ehp2.  ¯:pd.:link reftype=hd refid=INI_CDWithoutBackslash.CDWithoutBackslash:elink.=
+0  &splitvbar.  1 &splitvbar.  2&colon.  Enables changing into subdirectory without trailing backslash
+:pt.:hp2.3.05a:ehp2.  ¯:pd.:link reftype=hd refid=INI_PopupWinPosRelative.PopupWinPosRelative:elink.=
+YES &splitvbar.  No&colon.  Positions popup windows (history and directory history) relative to
+current cursor position.
+:pt.:hp2.3.05a:ehp2.  ¯:pd.:link reftype=hd refid=INI_NewByteDisp.NewByteDisp:elink.=
+0  &splitvbar.  1 &splitvbar.  2&colon.  Tunes the used and free byte display for dir command.
+:pt.:hp2.3.05a:ehp2.  ¯:pd.Added sample .ini and start.cmd files.
+:pt.:hp2.3.04g:ehp2.  ¯:pd.:link reftype=hd refid=INI_ChangeTitle.ChangeTitle:elink.=
+YES &splitvbar.  No&colon.  Enables or disables automatic OS/2 session title changes.
+:eparml.
 :lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made by JP Software:ehp8.
+:eparml.
+:lm margin=1.:parml tsize=10 break=fit.
+:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd
+refid=INI_ListRowStart.ListRowStart:elink.  = 1 &splitvbar.  0&colon.  Specifies
+whether :link reftype=hd refid=LIST.LIST:elink. and :link reftype=hd
+refid=FFIND.FFIND:elink. consider the first line in a file to be line
+"1" or line "0".  The new default is "1".
+:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd refid=INI_PathExt.PathExt:elink.  =
+NO &splitvbar.  Yes&colon.  Determines whether 4OS2 uses standard
+extensions when searching the path, or uses the alternate extensions
+specified in the :link reftype=hd refid=PATHEXT.PATHEXT:elink. environment
+variable.
+:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd refid=INI_UnixPaths.UnixPaths:elink.=
+Yes &splitvbar.  NO&colon.  Enables or disables the forward slash as a
+path separator in the command name (the first item on the command line).
+:eparml.
+:lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made prior to version 3.01:ehp8.
 :pt.¯:pd.In previous versions the "global" portion of the :link reftype=hd
 refid=INIFile..INI file:elink. (the part prior to any [Primary] or
 [Secondary] section) did not have a section name.  This has been changed; a
@@ -18733,47 +18818,6 @@ size when displaying a file in LIST.
 :pt.¯:pd.:link reftype=hd refid=INI_TreePath.TreePath:elink. =
 Path&colon.  Specifies the location of :hp1.JPSTREE.IDX:ehp1. (the :link
 reftype=hd refid=ExtDirSearch.extended directory search:elink. database;
-defaults to C&colon.\).
-:eparml.
-:lm margin=1.:parml tsize=10 break=fit.
-:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd
-refid=INI_ListRowStart.ListRowStart:elink.  = 1 &splitvbar.  0&colon.  Specifies
-whether :link reftype=hd refid=LIST.LIST:elink. and :link reftype=hd
-refid=FFIND.FFIND:elink. consider the first line in a file to be line
-"1" or line "0".  The new default is "1".
-:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd refid=INI_PathExt.PathExt:elink.  =
-NO &splitvbar.  Yes&colon.  Determines whether 4OS2 uses standard
-extensions when searching the path, or uses the alternate extensions
-specified in the :link reftype=hd refid=PATHEXT.PATHEXT:elink. environment
-variable.
-:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd refid=INI_UnixPaths.UnixPaths:elink.=
-Yes &splitvbar.  NO&colon.  Enables or disables the forward slash as a
-path separator in the command name (the first item on the command line).
-:pt.:pd.
-:pt.:hp8.The following changes were not made by JP Software:ehp8.
-:pt.:pd.
-:pt.:hp2.3.04g:ehp2.  ¯:pd.:link reftype=hd refid=INI_ChangeTitle.ChangeTitle:elink.=
-YES &splitvbar.  No&colon.  Enables or disables automatic OS/2 session title changes.
-:pt.:hp2.3.05a:ehp2.  ¯:pd.:link reftype=hd refid=INI_TitleIsCurDir.TitleIsCurDir:elink.=
-YES &splitvbar.  No&colon.  Enables current path as OS/2 session title
-:pt.:hp2.3.05a:ehp2.  ¯:pd.:link reftype=hd refid=INI_CDWithoutBackslash.CDWithoutBackslash:elink.=
-0  &splitvbar.  1 &splitvbar.  2&colon.  Enables changing into subdirectory without trailing backslash
-:pt.:hp2.3.05a:ehp2.  ¯:pd.:link reftype=hd refid=INI_PopupWinPosRelative.PopupWinPosRelative:elink.=
-YES &splitvbar.  No&colon.  Positions popup windows (history and directory history) relative to
-current cursor position.
-:pt.:hp2.3.05a:ehp2.  ¯:pd.:link reftype=hd refid=INI_NewByteDisp.NewByteDisp:elink.=
-0  &splitvbar.  1 &splitvbar.  2&colon.  Tunes the used and free byte display for dir command.
-:pt.:hp2.3.05a:ehp2.  ¯:pd.Added sample .ini and start.cmd files.
-
-:pt.:hp2.3.06:ehp2.  ¯:pd.Added bldlevel to .exe and .dll files.
-:pt.:hp2.3.06:ehp2.  ¯:pd.Added help for options dialog.
-:pt.:hp2.3.06:ehp2.  ¯:pd.Fixed TitleIsCurDir behaviour (partly reverted SHLs changes).
-:pt.:hp2.3.06:ehp2.  ¯:pd.Changed version numbering to digits only.
-
-.* 2013-04-25 SHL
-:pt.:hp2.3.09:ehp2.  ¯:pd.Changed default :link reftype=hd refid=INI_History.History:elink. buffer size to 4092.
-:pt.:hp2.3.09:ehp2.  ¯:pd.Changed default :link reftype=hd refid=INI_DirHistory.DirHistory:elink. buffer size to 4092.
-
 :eparml.
 
 .* --------------------------------------------------------------------------
@@ -18781,7 +18825,38 @@ current cursor position.
 :h2 name=NewCompat.Technical and Compatibility Enhancements
 :p.
 :hp2.What's New - Technical and Compatibility Enhancements:ehp2.
+:lm margin=1.:parml tsize=10 break=fit.
+.*
+:pt.:hp2.3.09:ehp2.  ¯:pd.Show DirHistory memory usage in memory command output.
+:pt.:hp2.3.09:ehp2.  ¯:pd.Default History and DirHistory to page multiples.
+:pt.:hp2.3.09:ehp2.  ¯:pd.Support #! as EXTPROC equivalent if UnixPaths enabled.
+.*
+:pt.:hp2.3.06:ehp2.  ¯:pd.The Ctrl-Up/Down key combinations can now be used to temporarily move the
+cursor up and down effectively scrolling the window when too small to hold all lines.
+:pt.:hp2.&5verB.:ehp2.  ¯:pd.Variable functions that take a drive letter argument now
+accept path names.
+:pt.:hp2.3.05A:ehp2.  ¯:pd.The Alt-F4 key combination can now be used to close 4OS2.
+:pt.:hp2.3.04i:ehp2.  ¯:pd.The Ctrl-V key combination can now be used to paste
+text from the clipboard while editing input.
+:pt.:hp2.3.04f:ehp2.  ¯:pd.Implemented @MASTER variable function for compatibility
+with 4DOS. Since 4OS2 doesn't distinguish between master and local environment,
+this function has no practical use in 4OS2.
+:pt.:hp2.3.04e:ehp2.  ¯:pd.Replaced floating point arithmetic with 64-bit integer
+arithmetic. This change is internal and should not affect users in any way.
+:eparml.
+:lm margin=8.:parml tsize=3 break=fit. 
+:pt.:hp8.The following changes were made by JP Software:ehp8.
+:eparml.
+:lm margin=1.:parml tsize=10 break=fit. 
+:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd refid=_@UNIQUE.@UNIQUE:elink.&colon.  Worked
+around an OS/2 bug that caused trouble if @UNIQUE was called repeatedly on a
+fast machine.
+:pt.:hp2.3.01:ehp2.  ¯:pd.Worked around an OS/2 API problem that was causing
+some batch files (particularly those with loops and lots of internal
+commands) to run very slowly.   
+:eparml.
 :lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made prior to version 3.01:ehp8.
 :pt.¯:pd.Removed the 16-bit version of 4OS2.
 :pt.¯:pd.Replaced the old 4OS2DLL.DLL / TCOS2DLL.DLL with a single file for
 both 4OS2 and TCOS2, named JPOS2DLL.DLL.  Also, JPOS2DLL is now loaded
@@ -18799,61 +18874,159 @@ passed to 4OS2, and to "tag" error messages with the product name.  See the
 :link reftype=hd refid=INI_Debug.Debug:elink. directive in
 :link reftype=hd refid=INIFile.4OS2.INI:elink. for additional details.
 :eparml.
-:lm margin=1.:parml tsize=10 break=fit.
-:pt.:hp2.3.01:ehp2.  ¯:pd.Worked around an OS/2 API problem that was causing
-some batch files (particularly those with loops and lots of internal
-commands) to run very slowly.
-:pt.:hp2.3.02:ehp2.  ¯:pd.:link reftype=hd refid=_@UNIQUE.@UNIQUE:elink.&colon.  Worked
-around an OS/2 bug that caused trouble if @UNIQUE was called repeatedly on a
-fast machine.
-:pt.:pd.
-:pt.:hp8.The following changes were not made by JP Software:ehp8.
-:pt.:pd.
-:pt.:hp2.3.04e:ehp2.  ¯:pd.Replaced floating point arithmetic with 64-bit integer
-arithmetic. This change is internal and should not affect users in any way.
-:pt.:hp2.3.04f:ehp2.  ¯:pd.Implemented @MASTER variable function for compatibility
-with 4DOS. Since 4OS2 doesn't distinguish between master and local environment,
-this function has no practical use in 4OS2.
-:pt.:hp2.3.04i:ehp2.  ¯:pd.The Ctrl-V key combination can now be used to paste
-text from the clipboard while editing input.
-:pt.:hp2.3.05A:ehp2.  ¯:pd.The Alt-F4 key combination can now be used to close 4OS2.
-:pt.:hp2.&5verB.:ehp2.  ¯:pd.Variable functions that take a drive letter argument now
-accept path names.
-:pt.:hp2.3.06:ehp2.  ¯:pd.The Ctrl-Up/Down key combinations can now be used to temporarily move the
-cursor up and down effectively scrolling the window when too small to hold all lines.
-.*
-:pt.:hp2.3.09:ehp2.  ¯:pd.Show DirHistory memory usage in memory command output.
-:pt.:hp2.3.09:ehp2.  ¯:pd.Default History and DirHistory to page multiples.
-:pt.:hp2.3.09:ehp2.  ¯:pd.Support #! as EXTPROC equivalent if UnixPaths enabled.
-.*
-:eparml.
 
 .* --------------------------------------------------------------------------
 
 :h2 name=NewBugs.Bugs Fixed
 :p.
 :hp2.What's New - Bugs Fixed:ehp2.
-
-:lm margin=8.
-:parml tsize=3 break=fit.
-:pt.¯:pd.:link reftype=hd refid=Piping.Piping:elink. the output of a batch
-file which also contains a pipe will no longer cause problems.
-:pt.¯:pd.:link reftype=hd refid=ACTIVATE.ACTIVATE:elink.&colon.  The CLOSE
-option now works properly.
-:pt.¯:pd.:link reftype=hd refid=DESCRIBE.DESCRIBE:elink.&colon.  Fixed a
-problem with quoted long filenames with paths.
-:pt.¯:pd.:link reftype=hd refid=REN.RENAME:elink.&colon.  Now works
-properly when renaming quoted long filenames with embedded wildcards.
-:pt.¯:pd.Fixed a problem with invalid drive change requests -- commands
-like "1&colon." would crash 4OS2.
-:pt.¯:pd.Quoted long filenames can now be used in the :link reftype=hd
-refid=INIFile..INI file:elink..
-:pt.¯:pd.:link reftype=hd refid=_@FILESEEKL.@FILESEEKL:elink.[] now always
-returns to the start of the file before seeking.
-:eparml.
+:lm margin=1. :parml tsize=10 break=fit .
+:pt.:hp2.3.10:ehp2.¯:pd.:link reftype=hd refid=_@EAWRITE.@EAWRITE:elink.[]&colon.
+Fix failure to remove EAs (ticket #9 changeset 38305). Trim blanks form beginning
+and end of EA name (ticket #10 changeset 38315)
+:pt.:hp2.3.10:ehp2.¯:pd.:link reftype=hd refid=_@EAREAD.@EAREAD:elink.[]&colon.
+Trim blanks form beginning and end of EA name (ticket #10 changeset 38315)
+:pt.:hp2.3.10:ehp2.¯:pd.Fix bldlevel strings (ticket #19).
+:pt.:hp2.3.10:ehp2.¯:pd.:link reftype=hd refid=_@WORD.@WORD:elink.Fix @word[] to return 0
+(ticket #11 changeset 38301).
+:pt.:hp2.3.10:ehp2.¯:pd.Hide LIBPATHSTRICT from environment list when not set
+(ticket #70 changeset 38310).
+:pt.:hp2.3.10:ehp2.¯:pd.Fix USAGE for dir command /O&colon.-deginrsu was missing an 'a'
+(ticket #60 changeset 38288).
+:pt.:hp2.3.10:ehp2.¯:pd.Correct the reporting of number of files deleted when an attempt
+to abort a delete is made (ticket #34 changeset 38300).
+:pt.:hp2.3.10:ehp2.¯:pd.Bypass internal help command for message file help names that 
+contain digits (ticket #59 changeset 38286).
+:pt.:hp2.3.10:ehp2.¯:pd.Assure that INI entries saved from the option dialog are always
+written to a new line (ticket #56 changeset 38297).
+:pt.:hp2.3.10:ehp2.¯:pd.Fix command line parsing so that adding an extention (i.e. .exe)
+to a name that is also and internal command always runs the external command 
+(ticket #54 changesets 38304, 38299).
+:pt.:hp2.3.10:ehp2.¯:pd.Fix trap caused by "for /a&colon.d /hr %X in ( * ) echo %X". 
+Having hr as one switch was not tolerated. Also fixed it to tolerate multiple switches
+grouped together and placed in any order (ticket #58 changeset 38289).
+:pt.:hp2.3.10:ehp2.¯:pd.Fixed :link reftype=hd
+refid=_@REPLACE.@REPLACE:elink.[string1,string2,text]&colon. to allow for an empty input
+string (ticket #61 changeset 38307).
+:pt.:hp2.3.10:ehp2.¯:pd.Eliminated 4OS2 beep which occurred when using Alt-Tab to
+access lSwitcher. Improve NormalKey error message when trying to deassign a key which is
+disallowed for use by 4OS2 (i.e. Alt-Tab, Ctrl-Esc, etc) (ticket #44).
+:pt.:hp2.3.09.1:ehp2. ¯:pd.Changes memory command descriptions to match displayed values.
 .*
-:lm margin=1.
-:parml tsize=10 break=fit.
+:pt.:hp2.3.09:ehp2. ¯:pd.Update @makeage to be Y2K compliant.
+:pt.:hp2.3.09:ehp2. ¯:pd.Resolve list I command exception (ticket #20, changeset 37507).
+:pt.:hp2.3.09:ehp2. ¯:pd.Correct ESET logic for BEGINLIBPATH etc.
+:pt.:hp2.3.09:ehp2. ¯:pd.Ensure max length quoted pathnames handled correctly.
+:pt.:hp2.3.09:ehp2. ¯:pd.Ensure command lines like 4os2 @foo.exe or
+@ foo.exe do not process foo.exe as an INI file.
+.*
+:pt.:hp2.3.08:ehp2. ¯:pd.Fix for CDWithoutBackslash=2 breaks some scripts (ticket #14).
+:pt.:hp2.3.07:ehp2. ¯:pd.Fix for CHCP (ticket #7).
+:pt.:hp2.3.06:ehp2. ¯:pd.Fixed cd into directories with names containing [.
+:pt.:hp2.3.05a:ehp2. ¯:pd.Large file support (>=2GB files with dir and touch commands).
+:pt.:hp2.3.04i:ehp2. ¯:pd.Fixed clipboard access. 4OS2 can now properly access clipboard data.
+:pt.:hp2.3.04h:ehp2. ¯:pd.Fixed shift /1 crashes.
+The command would crash if there were no command line arguments.
+:pt.:hp2.3.04h:ehp2. ¯:pd.Fixed spurious REXX error reports.  The construct 'if 
+exist x del x' would trigger ERROR if x did not exist. Attempts to chain to a 
+4OS2 batch file from a REXX script were not reported with SYS1803.
+:pt.:hp2.3.04g:ehp2. ¯:pd.Added support for the LIBPATHSTRICT "pseudo-variable"
+in a manner analogous to BEGINLIBPATH and ENDLIBPATH.
+:pt.:hp2.3.04g:ehp2. ¯:pd.:link reftype=hd refid=TITLE.TITLE:elink.&colon.
+Fixed a case when WinSetTitleAndIcon fails to change VIO window title. We were
+already calling WinSetWindowText, but didn't have message queue, causing
+WinSetWindowText to fail as well.
+:pt.:hp2.3.04f:ehp2. ¯:pd.:link reftype=hd refid=LIST.LIST:elink.&colon.
+Fixed arithmetic overflow when displaying position within a file (as a percentage).
+The problem was occurring when viewing large files and moving past approximately 21MB.
+:pt.:hp2.3.04f:ehp2. ¯:pd.:link reftype=hd refid=FFIND.FFIND:elink.&colon.
+Fixed the /T (text search) option which had been completely nonfunctional since
+version 3.04.
+:pt.:hp2.3.04e:ehp2. ¯:pd.Fixed a problem introduced in 3.04 which caused internal
+state not to be saved properly across GOSUB calls in batch files.
+:pt.:hp2.3.04d:ehp2. ¯:pd.Fixed a problem where 4OS2 did not recognize that a short
+name and a long name can point the same file on FAT32. Requires FAT32.IFS
+version 0.95 or newer. (thanks to KO Myung-Hun)
+:pt.:hp2.3.04d:ehp2. ¯:pd.Fixed a problem with DBCS input. (thanks to KO Myung-Hun)
+:pt.:hp2.3.04c:ehp2. ¯:pd.:link reftype=hd refid=CD.CD:elink.&colon.
+Fixed a crash caused by accidentally using paths such as ",,".
+:pt.:hp2.3.04c:ehp2. ¯:pd.Clarified documentation to make it obvious that this release
+was not produced by JP Software.
+:pt.:hp2.3.04b:ehp2. ¯:pd.Fixed a problem with setting the command window
+icon on Warp 4 and above.
+:pt.:hp2.3.04b:ehp2. ¯:pd.Changed the way 4OS2 loads JPOS2DLL.DLL. Previously
+only the LIBPATH would be searched. Now the LIBPATH is searched first and if
+the search fails, the directory where 4OS2.EXE was invoked from is searched.
+A side effect of this new behavior is that if two different versions of 4OS2
+are run from two different directories and there is no JPOS2DLL.DLL on LIBPATH,
+each 4OS2 version will load its own JPOS2DLL.
+:pt.:hp2.3.04:ehp2. ¯:pd.:link reftype=hd refid=CHCP.CHCP:elink.&colon.
+Fixed a problem still causing a crash when changing the code page.
+:eparml.
+:lm margin=8.:parml tsize=3 break=fit. 
+:pt.:hp8.The following changes were made by JP Software:ehp8.
+:eparml.
+:lm margin=1.:parml tsize=10 break=fit. 
+:pt.:hp2.3.03:ehp2. ¯:pd.Fixed a problem which caused a crash with
+extremely large :link reftype=hd refid=ExtDirSearch.extended directory search:elink.
+databases.
+:pt.:hp2.3.03:ehp2. ¯:pd.:link reftype=hd refid=CHCP.CHCP:elink.&colon.
+Fixed a problem which caused a crash when changing the code page under
+Warp FixPak 13 and above.
+:pt.:hp2.3.03:ehp2. ¯:pd.:link reftype=hd refid=FFIND.FFIND:elink.&colon.
+Fixed a problem with wildcards.
+:pt.:hp2.3.02b:ehp2. ¯:pd.Fixed a problem with
+:link reftype=hd refid=Piping.piping:elink. to external applications.
+:pt.:hp2.3.02b:ehp2. ¯:pd.Fixed a problem which occasionally caused
+spurious "internal error" crashes.
+:pt.:hp2.3.02b:ehp2. ¯:pd.:link reftype=hd refid=_@EXEC.@EXEC:elink.&colon.  Fixed
+a problem which prevented the command from being executed at all if it
+was preceded with an :hp2.@:ehp2..
+:pt.:hp2.3.02b:ehp2. ¯:pd.:link reftype=hd refid=_@MAKEAGE.@MAKEAGE:elink.&colon.  Fixed
+a problem which caused 2-digit dates to be interpreted based on 1980
+rather than 2000 (e.g.  01-01-02 was taken to mean 1-Jan-1982 rather
+than the correct value, 1-Jan-2000).
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=Wildcards.Extended wildcards:elink. are now supported inside
+:link reftype=hd refid=ExclRanges.file exclusion ranges:elink..  (In previous versions the
+documentation indicated that this support was available, but it was
+not.)
+:pt.:hp2.3.02:ehp2. ¯:pd.Fixed a problem which prevented :link
+reftype=hd refid=FileComp.filename completion:elink. from returning hidden
+and system files when these files were enabled in the FILECOMPLETION
+variable.  Note that the default filename completion search does not
+display hidden and system files, but now if you use FILECOMPLETION to
+enable those files for a specific command, they will be shown as you
+cycle through files with <Tab>.
+:pt.:hp2.3.02:ehp2. ¯:pd.Improved handling of commands using both *
+(disable alias) and @ (don't add to command history) at the start.
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=_@FILES.@FILES:elink.&colon.  Fixed a problem
+which caused this function to leave a file handle open, which could
+cause subsequent "access denied" errors.
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=_@REPLACE.@REPLACE:elink.&colon.  Fixed a problem
+with replacing commas.
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=_@SELECT.@SELECT:elink.&colon.  Fixed a problem
+with files over 64K.
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=CDD.CDD:elink.&colon.
+Fixed a problem if TREE was disabled (CDD /S uses TREE to build the
+directory index).
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=FFIND.FFIND:elink.&colon.
+Fixed a problem with /C and bracketed wildcards.
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=INPUT.INPUT:elink.&colon.
+Fixed a problem with line input (SETDOS /L1) and the /Ln switch.  (It
+was allowing a maximum of "n-1" rather than "n" characters.)
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=LIST.LIST:elink.&colon.
+Fixed a problem with highlighting the offsets as well as the actual
+found text when in hex mode.
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=SWITCH.SWITCH:elink.&colon.
+Fixed minor problems with nested SWITCH statements.
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=TEE.TEE:elink.&colon.
+Fixed a problem with TEE'ing to CLIP&colon..
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=TOUCH.TOUCH:elink.&colon.
+Fixed a problem with failing to display a usage message when there were
+no parameters after a /C, and another problem with properly detecting
+invalid times.
+:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=UNALIAS.UNALIAS:elink.&colon.
+Fixed a problem with /R.
 :pt.:hp2.3.01:ehp2. ¯:pd.Enabled the :link reftype=hd
 refid=INI_NormalPopupKey.NormalPopupKey:elink. directive in the .INI
 file.  Previously this directive was documented but was only available under
@@ -18914,123 +19087,24 @@ problem with not adding quotes to long filenames with embedded whitespace.
 longer truncates on a write if the file was opened in binary mode.
 :pt.:hp2.3.01:ehp2. ¯:pd.:link reftype=hd refid=_@WORDS.@WORDS:elink.[["xxx",]string]&colon.  Fixed a
 problem if the line began with a -.
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=Wildcards.Extended wildcards:elink. are now supported inside
-:link reftype=hd refid=ExclRanges.file exclusion ranges:elink..  (In previous versions the
-documentation indicated that this support was available, but it was
-not.)
-:pt.:hp2.3.02:ehp2. ¯:pd.Fixed a problem which prevented :link
-reftype=hd refid=FileComp.filename completion:elink. from returning hidden
-and system files when these files were enabled in the FILECOMPLETION
-variable.  Note that the default filename completion search does not
-display hidden and system files, but now if you use FILECOMPLETION to
-enable those files for a specific command, they will be shown as you
-cycle through files with <Tab>.
-:pt.:hp2.3.02:ehp2. ¯:pd.Improved handling of commands using both *
-(disable alias) and @ (don't add to command history) at the start.
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=_@FILES.@FILES:elink.&colon.  Fixed a problem
-which caused this function to leave a file handle open, which could
-cause subsequent "access denied" errors.
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=_@REPLACE.@REPLACE:elink.&colon.  Fixed a problem
-with replacing commas.
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=_@SELECT.@SELECT:elink.&colon.  Fixed a problem
-with files over 64K.
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=CDD.CDD:elink.&colon.
-Fixed a problem if TREE was disabled (CDD /S uses TREE to build the
-directory index).
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=FFIND.FFIND:elink.&colon.
-Fixed a problem with /C and bracketed wildcards.
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=INPUT.INPUT:elink.&colon.
-Fixed a problem with line input (SETDOS /L1) and the /Ln switch.  (It
-was allowing a maximum of "n-1" rather than "n" characters.)
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=LIST.LIST:elink.&colon.
-Fixed a problem with highlighting the offsets as well as the actual
-found text when in hex mode.
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=SWITCH.SWITCH:elink.&colon.
-Fixed minor problems with nested SWITCH statements.
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=TEE.TEE:elink.&colon.
-Fixed a problem with TEE'ing to CLIP&colon..
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=TOUCH.TOUCH:elink.&colon.
-Fixed a problem with failing to display a usage message when there were
-no parameters after a /C, and another problem with properly detecting
-invalid times.
-:pt.:hp2.3.02:ehp2. ¯:pd.:link reftype=hd refid=UNALIAS.UNALIAS:elink.&colon.
-Fixed a problem with /R.
-:pt.:hp2.3.02b:ehp2. ¯:pd.Fixed a problem with
-:link reftype=hd refid=Piping.piping:elink. to external applications.
-:pt.:hp2.3.02b:ehp2. ¯:pd.Fixed a problem which occasionally caused
-spurious "internal error" crashes.
-:pt.:hp2.3.02b:ehp2. ¯:pd.:link reftype=hd refid=_@EXEC.@EXEC:elink.&colon.  Fixed
-a problem which prevented the command from being executed at all if it
-was preceded with an :hp2.@:ehp2..
-:pt.:hp2.3.02b:ehp2. ¯:pd.:link reftype=hd refid=_@MAKEAGE.@MAKEAGE:elink.&colon.  Fixed
-a problem which caused 2-digit dates to be interpreted based on 1980
-rather than 2000 (e.g.  01-01-02 was taken to mean 1-Jan-1982 rather
-than the correct value, 1-Jan-2000).
-:pt.:hp2.3.03:ehp2. ¯:pd.Fixed a problem which caused a crash with
-extremely large :link reftype=hd refid=ExtDirSearch.extended directory search:elink.
-databases.
-:pt.:hp2.3.03:ehp2. ¯:pd.:link reftype=hd refid=CHCP.CHCP:elink.&colon.
-Fixed a problem which caused a crash when changing the code page under
-Warp FixPak 13 and above.
-:pt.:hp2.3.03:ehp2. ¯:pd.:link reftype=hd refid=FFIND.FFIND:elink.&colon.
-Fixed a problem with wildcards.
-.*
-:pt.:hp8.The following changes were not made by JP Software.:ehp8.
-.*
-:pt.:hp2.3.04:ehp2. ¯:pd.:link reftype=hd refid=CHCP.CHCP:elink.&colon.
-Fixed a problem still causing a crash when changing the code page.
-:pt.:hp2.3.04b:ehp2. ¯:pd.Fixed a problem with setting the command window
-icon on Warp 4 and above.
-:pt.:hp2.3.04b:ehp2. ¯:pd.Changed the way 4OS2 loads JPOS2DLL.DLL. Previously
-only the LIBPATH would be searched. Now the LIBPATH is searched first and if
-the search fails, the directory where 4OS2.EXE was invoked from is searched.
-A side effect of this new behaviour is that if two different versions of 4OS2
-are run from two different directories and there is no JPOS2DLL.DLL on LIBPATH,
-each 4OS2 version will load its own JPOS2DLL.
-:pt.:hp2.3.04c:ehp2. ¯:pd.:link reftype=hd refid=CD.CD:elink.&colon.
-Fixed a crash caused by accidentally using paths such as ",,".
-:pt.:hp2.3.04c:ehp2. ¯:pd.Clarified documentation to make it obvious that this release
-was not produced by JP Software.
-:pt.:hp2.3.04d:ehp2. ¯:pd.Fixed a problem where 4OS2 did not recognize that a short
-name and a long name can point the same file on FAT32. Requires FAT32.IFS
-version 0.95 or newer. (thanks to KO Myung-Hun)
-:pt.:hp2.3.04d:ehp2. ¯:pd.Fixed a problem with DBCS input. (thanks to KO Myung-Hun)
-:pt.:hp2.3.04e:ehp2. ¯:pd.Fixed a problem introduced in 3.04 which caused internal
-state not to be saved properly across GOSUB calls in batch files.
-:pt.:hp2.3.04f:ehp2. ¯:pd.:link reftype=hd refid=LIST.LIST:elink.&colon.
-Fixed arithmetic overflow when displaying position within a file (as a percentage).
-The problem was occurring when viewing large files and moving past approximately 21MB.
-:pt.:hp2.3.04f:ehp2. ¯:pd.:link reftype=hd refid=FFIND.FFIND:elink.&colon.
-Fixed the /T (text search) option which had been completely nonfunctional since
-version 3.04.
-:pt.:hp2.3.04g:ehp2. ¯:pd.Added support for the LIBPATHSTRICT "pseudo-variable"
-in a manner analogous to BEGINLIBPATH and ENDLIBPATH.
-:pt.:hp2.3.04g:ehp2. ¯:pd.:link reftype=hd refid=TITLE.TITLE:elink.&colon.
-Fixed a case when WinSetTitleAndIcon fails to change VIO window title. We were
-already calling WinSetWindowText, but didn't have message queue, causing
-WinSetWindowText to fail as well.
-:pt.:hp2.3.04h:ehp2. ¯:pd.Fixed shift /1 crashes.
-The command would crash if there were no command line arguments.
-:pt.:hp2.3.04h:ehp2. ¯:pd.Fixed spurious REXX error reports.  The construct 'if exist x del x' would
-trigger ERROR if x did not exist.
-Attempts to chain to a 4OS2 batch file from a REXX script were not reported with SYS1803.
-:pt.:hp2.3.04i:ehp2. ¯:pd.Fixed clipboard access.
-4OS2 can now properly access clipboard data.
-:pt.:hp2.3.05a:ehp2. ¯:pd.Large file support (>=2GB files with dir and touch commands).
-:pt.:hp2.3.06:ehp2. ¯:pd.Fixed cd into directories with names containing [.
-:pt.:hp2.3.07:ehp2. ¯:pd.Fix for CHCP (ticket #7).
-:pt.:hp2.3.08:ehp2. ¯:pd.Fix for CDWithoutBackslash=2 breaks some scripts (ticket #14).
-.*
-:pt.:hp2.3.09:ehp2. ¯:pd.Update @makeage to be Y2K compliant.
-:pt.:hp2.3.09:ehp2. ¯:pd.Resolve list I command exception (ticket #20, changset 37507).
-:pt.:hp2.3.09:ehp2. ¯:pd.Correct ESET logic for BEGINLIBPATH etc.
-:pt.:hp2.3.09:ehp2. ¯:pd.Ensure max length quoted pathnames handled correctly.
-:pt.:hp2.3.09:ehp2. ¯:pd.Ensure command lines like 4os2 @foo.exe or
-@ foo.exe do not process foo.exe as an INI file.
-:pt.:hp2.3.09.1:ehp2. ¯:pd.Changes memory command descriptions to match displayed values.
-
-.*
-:eparml.:lm margin=1.
+:eparml.
+:lm margin=8.:parml tsize=3 break=fit.
+:pt.:hp8.The following changes were made prior to version 3.01:ehp8.
+:pt.¯:pd.:link reftype=hd refid=Piping.Piping:elink. the output of a batch
+file which also contains a pipe will no longer cause problems.
+:pt.¯:pd.:link reftype=hd refid=ACTIVATE.ACTIVATE:elink.&colon.  The CLOSE
+option now works properly.
+:pt.¯:pd.:link reftype=hd refid=DESCRIBE.DESCRIBE:elink.&colon.  Fixed a
+problem with quoted long filenames with paths.
+:pt.¯:pd.:link reftype=hd refid=REN.RENAME:elink.&colon.  Now works
+properly when renaming quoted long filenames with embedded wildcards.
+:pt.¯:pd.Fixed a problem with invalid drive change requests -- commands
+like "1&colon." would crash 4OS2.
+:pt.¯:pd.Quoted long filenames can now be used in the :link reftype=hd
+refid=INIFile..INI file:elink..
+:pt.¯:pd.:link reftype=hd refid=_@FILESEEKL.@FILESEEKL:elink.[] now always
+returns to the start of the file before seeking.
+:eparml.
 
 .* --------------------------------------------------------------------------
 
@@ -19218,7 +19292,7 @@ A file system is a method of organizing all of the files on an entire disk or
 hard disk volume.  :hp2.Directories:ehp2. are used to divide the files on a
 disk into logical groups that are easy to work with.  Their purpose is
 similar to the use of file drawers to contain groups of hanging folders,
-hanging folders to contain smaller manila folders, and so
+hanging folders to contain smaller manilla folders, and so
 on.  :hp2.Directories :ehp2.are also sometimes referred to as
 :hp2.folders:ehp2..
 :p.
@@ -19673,7 +19747,7 @@ selection you wish to make&colon.
 :pt.:hp2.&uarrow.:ehp2.:pd.Move the selection bar up one line.
 :pt.:hp2.&darrow.:ehp2.:pd.Move the selection bar down one line.
 :pt.:hp2.:ehp2.:pd.Scroll the display left 4 columns.
-:pt.:hp2.:ehp2.:pd.Scroll the display right 4 columns.
+:pt.:hp2.:ehp2.:pd.Scroll the display right 4 columns.
 :pt.:hp2.PgUp:ehp2.:pd.Scroll the display up one page.
 :pt.:hp2.PgDn:ehp2.:pd.Scroll the display down one page.
 :pt.:hp2.Ctrl-PgUp:ehp2.:pd.Go to the beginning of the list.
@@ -19842,7 +19916,7 @@ showing the hexadecimal (base-16) value.
     007   07       BEL   ^G   ³   023   17      ETB   ^W
     008   08      BS    ^H   ³   024   18      CAN   ^X
     009   09       HT    ^I   ³   025   19      EM    ^Y
-    010   0A       LF    ^J   ³   026   1A      SUB   ^Z
+    010   0A       LF    ^J   ³   026   1A      SUB   ^Z
     011   0B      VT    ^K   ³   027   1B      ESC   ^[
     012   0C      FF    ^L   ³   028   1C      FS    ^\
     013   0D       CR    ^M   ³   029   1D      GS    ^]
@@ -20374,7 +20448,7 @@ condition is false, the result is false.
 standardized sequences of text characters which control colors on the
 screen, manipulate the cursor, and redefine keys.  OS2 includes support for
 ANSI screen and cursor control sequences.  The abbreviation ANSI is for
-American National Standards Institute, an organization whch sets standards
+American National Standards Institute, an organization which sets standards
 for computer-related systems, including "ANSI" screen control sequences.
 :p.
 :hp2.Append:ehp2.&colon.  Concatenation of one file or string onto the end
@@ -20467,7 +20541,7 @@ File:ehp2..
 (or "firmware") stored on chips inside PC systems.  The BIOS provides basic
 low-level control of devices required to operate the system, such as the
 keyboard, floppy disk, and screen; it also handles system self-tests at
-startup, and intiates loading of the operating system.
+startup, and initiates loading of the operating system.
 :p.
 :hp2.Block Device:ehp2.&colon.  A physical device for input or output which
 can transmit or receive large blocks of data while the computer is engaged
@@ -21277,7 +21351,7 @@ with an Intel 8086, 80286, 80386, 80486, or Pentium CPU to perform decimal
 arithmetic ("floating point") calculations.  Some 80486s and the Pentium CPU
 have the numeric coprocessor built in to the CPU chip; in all other cases it
 is on a physically separate chip, and is optional (when the coprocessor is
-not avilable, the CPU performs decimal arithmetic through other, much slower
+not available, the CPU performs decimal arithmetic through other, much slower
 methods).
 
 .* --------------------------------------------------------------------------
