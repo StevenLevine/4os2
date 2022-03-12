@@ -6,10 +6,10 @@
 |     MODULE NAME:   PMPRINTF.H
 |
 |
-|         $Author:   Dennis Bareis  $
-|       $Revision:   1.0  $
-|           $Date:   01 Dec 1993 13:30:14  $
-|        $Logfile:   V:/SUEPVCS/SUPPORT/TEMPLATE.H_V  $
+|         $Author:   Dennis_Bareis  $
+|       $Revision:   1.2  $
+|           $Date:   28 Sep 1996 15:08:20  $
+|        $Logfile:   C:/PROJECTS/OS2/PVCS.IT/PMPRINTF/PMPRINTF.H_V  $
 |
 |     DESCRIPTION:
 |
@@ -25,6 +25,9 @@
         #include <stdarg.h>
 #endif
 
+#define  INCL_LONGLONG  // 20090705 AB
+
+#include <float.h>
 
 /*--- If C++ declare header as 'C' ------------------------------------------*/
 #ifdef __cplusplus
@@ -36,7 +39,7 @@
 #pragma pack(1)
 
 /*--- General definitions ---------------------------------------------------*/
-#define PMPRINTF_VERSION              "96.174"
+#define PMPRINTF_VERSION              "96.273"
 #define PMPRINTF_QUEUE_PREFIX         "\\QUEUES\\"
 #define PMPRINTF_DEFAULT_QUEUE_NAME   PMPRINTF_QUEUE_PREFIX  "PRINTF32"
 typedef ULONG   PMPRINTF_MODE;
@@ -45,8 +48,8 @@ typedef ULONG   PMPRINTF_MODE;
         #define PMPRINTF_SEND_PROC_INFO     0x00000002
 
         /*--- Other flags which don't effect the line sent to PMPRINTF.EXE ---*/
-        #define PMPRINTF_NOISE_ON_OK_AGAIN  0x40000000
-        #define PMPRINTF_NO_NOISE_ON_ERROR  0x80000000
+        #define PMPRINTF_NOISE_ON_1ST_ERROR 0x40000000
+        #define PMPRINTF_NOISE_ON_OK_AGAIN  0x80000000
 
         /*--- Combine flags for ease of use ---------------------------------*/
         #define PMPRINTF_ALL_HEADER_FIELDS_EXCEPT_TIME  (PMPRINTF_SEND_PROC_INFO)
@@ -54,9 +57,9 @@ typedef ULONG   PMPRINTF_MODE;
         #define PMPRINTF_DEFAULT_MODE                   PMPRINTF_ALL_HEADER_FIELDS_EXCEPT_TIME
 
 /*--- Define some per thread data (for efficiency) --------------------------*/
-#define PMPRINTF_MAX_DATA_CHARS   2000    //The output from sprintf() should not produce output whose strlen() is greater than this
-#define PMPRINTF_MAX_LINE_CHARS   500     //This is the maximum line length that is sent to PMPRINTF.EXE
-#define PMPRINTF_MAX_HEADER_CHARS 100     //This is the maximum length of any possible header.
+#define PMPRINTF_MAX_DATA_CHARS   8000//ToDo: 2000    //The output from sprintf() should not produce output whose strlen() is greater than this
+#define PMPRINTF_MAX_LINE_CHARS   4000//500     //This is the maximum line length that is sent to PMPRINTF.EXE
+#define PMPRINTF_MAX_HEADER_CHARS 400//100     //This is the maximum length of any possible header.
 #define MAX_THREADS               255     //Per Process! (can't find real limit documented or in C/Toolkit headers)
 typedef struct PER_THREAD
 {
@@ -76,6 +79,8 @@ typedef struct PER_THREAD
     char  LineHeader[PMPRINTF_MAX_HEADER_CHARS+1];
 
     /*--- Some other interesting information --------------------------------*/
+    BOOL    PmprintfDisabled;
+            #define ENVVAR_NOPMPRINTF_BY_DEFAULT_IF_EXISTS  "NOPMPRINTF"
     void  * Pib;
     void  * Tib;
 }      PER_THREAD;
@@ -88,7 +93,7 @@ ULONG         _System   PmPrintf(char *Format, ...);
 ULONG         _System   PmPrintfVa(char *Format, va_list args);
 ULONG         _System   PmPrintfString(char *String);
 ULONG         _System   PmPrintfDisplayInterfaceVersionInfo(void);
-ULONG         _System I_PmpfSetMacroHeader(CHAR *SourceModule, int LineNumber, CHAR *Function);
+ULONG         _System I_PmpfSetMacroHeader(char  *SourceModule, int LineNumber, char  *Function);
 
 
 /*--- Make sure the "__FUNCTION__" macro exists -----------------------------*/
@@ -99,7 +104,7 @@ ULONG         _System I_PmpfSetMacroHeader(CHAR *SourceModule, int LineNumber, C
 
 /*--- Useful Macros ---------------------------------------------------------*/
 #define Pmpf(FmtAndVariableParmsInBrackets)                                  \
-        do                                                                   \
+/* 20090816 AB        do */                                                                  \
         {                                                                    \
             /*--- Output a header ---------------------------------------*/  \
             I_PmpfSetMacroHeader(__FILE__, __LINE__, NULL);                  \
@@ -107,9 +112,9 @@ ULONG         _System I_PmpfSetMacroHeader(CHAR *SourceModule, int LineNumber, C
             /*--- Output the message ------------------------------------*/  \
             PmPrintf FmtAndVariableParmsInBrackets;                          \
         }                                                                    \
-        while   (0)
+/* 20090816 AB        while   (0) */
 #define PmpfF(FmtAndVariableParmsInBrackets)                                 \
-        do                                                                   \
+/* 20090816 AB        do  */                                                                 \
         {                                                                    \
             /*--- Output a header ---------------------------------------*/  \
             I_PmpfSetMacroHeader(__FILE__, __LINE__, __FUNCTION__);          \
@@ -117,7 +122,7 @@ ULONG         _System I_PmpfSetMacroHeader(CHAR *SourceModule, int LineNumber, C
             /*--- Output the message ------------------------------------*/  \
             PmPrintf FmtAndVariableParmsInBrackets;                          \
         }                                                                    \
-        while   (0)
+/* 20090816 AB        while   (0) */
 
 
 /*--- Simple to use "Here I am" macros --------------------------------------*/
