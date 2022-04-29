@@ -777,7 +777,7 @@ int mv_cmd(int argc, char **argv)
         //   (i.e., "MOVE /S . subdir" )
         arg = path_part( Move.szSource );
         nLength = strlen( arg );
-        if ( (Move.fFlags & MOVE_SUBDIRS) || ( Move.fFlags & MOVE_CMDDIR )) {
+        if ( (Move.fFlags & MOVE_SUBDIRS) /*|| ( Move.fFlags & MOVE_CMDDIR )*/) {
             if ( _strnicmp( arg, Move.szTarget, nLength ) == 0 ) {
                 rval = error( ERROR_4DOS_INFINITE_MOVE, Move.szSource );
                 break;
@@ -841,7 +841,6 @@ static int _mv(MOVE_STRUCT *Move)
     LONGLONG llAppendOffset = 0LL;            // 20090828 AB LFS
     FILESEARCH dir;
     char *pszLFN;
-    BOOL fNotCmdDir = FALSE;
 
     EnableSignals();
     dir.hdir = INVALID_HANDLE_VALUE;
@@ -862,7 +861,6 @@ static int _mv(MOVE_STRUCT *Move)
         if ( ((~Move->fFlags & MOVE_CMDDIR)  && !gpIniptr->CMDDirMvCpy) ||
             ( (Move->szSource[1] == ':') && ( Move->szSource[3] == '*') ) || (~Move->fFlags & MOVE_SOURCEISDIR)) {
             mkdirname( Move->szTarget, WILD_FILE );
-            fNotCmdDir = TRUE;
         }
         else { // Copy change
             char *p;
@@ -893,11 +891,7 @@ static int _mv(MOVE_STRUCT *Move)
                 free(temp);
                 return( error( ERROR_PATH_NOT_FOUND, Move->szTarget ));
             }
-                free(temp);
-        }
-    }
-        if ( !fNotCmdDir /*|| ( Move->fFlags & MOVE_SUBDIRS ) || ( Move->fFlags & MOVE_TO_DIR )*/) {
-    
+            free(temp);
             // if moving subdirectories, create the target
     
             // remove trailing '/' or '\' in target
@@ -916,8 +910,27 @@ static int _mv(MOVE_STRUCT *Move)
     
             mkdirname( Move->szTarget, WILD_FILE );
         }
+    }
+    if (( Move->fFlags & MOVE_SUBDIRS ) || ( Move->fFlags & MOVE_TO_DIR )) {
 
+        // if moving subdirectories, create the target
 
+        // remove trailing '/' or '\' in target
+        strip_trailing( Move->szTarget+3, SLASHES );
+
+        MakeDirectory( Move->szTarget, 1 );
+        if ( is_dir( Move->szTarget ) == 0 )
+            return( error( ERROR_PATH_NOT_FOUND, Move->szTarget ));
+
+        // move description to newly-created target
+        if ( Move->fFlags & MOVE_SOURCEISDIR ) {
+            copy_filename( Move->szSourceName, path_part( Move->szSource) );
+            strip_trailing( Move->szSourceName+3, SLASHES );
+            process_descriptions( Move->szSourceName, Move->szTarget, DESCRIPTION_COPY );
+        }
+
+        mkdirname( Move->szTarget, WILD_FILE );
+    }
     // suppress error message from find_file
     if ( Move->fFlags & MOVE_NOERRORS )
         mode |= FIND_NOERRORS;  // 0x100
@@ -1085,7 +1098,7 @@ static int _mv(MOVE_STRUCT *Move)
         process_descriptions( NULL, Move->szSource, DESCRIPTION_REMOVE );
 
     // move subdirectories too?
-    if ( ( Move->fFlags & MOVE_SUBDIRS ) || ( Move->fFlags & MOVE_CMDDIR )) {
+    if ( ( Move->fFlags & MOVE_SUBDIRS ) /*|| ( Move->fFlags & MOVE_CMDDIR )*/) {
         // save the current source filename start
         source_arg = strchr( Move->szSource, '*' );
 
@@ -1114,15 +1127,15 @@ static int _mv(MOVE_STRUCT *Move)
             if ( rval != 0 )
                 break;
         }
-
-        // try to delete the subdirectory (unless it's the root or
-        //   the current dir for that drive)
+    // try to delete the subdirectory (unless it's the root or
+    //   the current dir for that drive)
         if ( ( Move->fFlags & MOVE_NOTHING ) == 0 ) {
-
+    
             // strip name and trailing '\'
             source_arg[-1] = '\0';
-
-            if ( (( arg = gcdir( Move->szSource, 1 )) != NULL ) && ( strlen( Move->szSource ) > 3 ) && ( _stricmp( Move->szSource, arg ) != 0 ) ) {
+    
+            if ( (( arg = gcdir( Move->szSource, 1 )) != NULL ) && ( strlen( Move->szSource ) > 3 ) &&
+                ( _stricmp( Move->szSource, arg ) != 0 ) ) {
                 // remove the directory & its description
                 SetFileMode( Move->szSource, _A_SUBDIR );
                 DestroyDirectory( Move->szSource );
@@ -1133,7 +1146,13 @@ static int _mv(MOVE_STRUCT *Move)
             }
         }
     }
+    if ( ( Move->fFlags & MOVE_CMDDIR ) ) {
+                // remove the directory & its description
+                SetFileMode( Move->szSource, _A_SUBDIR );
+                DestroyDirectory( Move->szSource );
+                process_descriptions( NULL, Move->szSource, DESCRIPTION_REMOVE );
 
+    }
     // set "target" back to original value
     *pszTargetArg = '\0';
 
