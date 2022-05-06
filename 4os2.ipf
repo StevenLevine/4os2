@@ -12,8 +12,8 @@
 .nameit symbol=10ver    text='3.10'
 
 .* Use this to reference current version
-.nameit symbol=curver   text='3.11'
-.nameit symbol=reldate  text='Jan 2022'
+.nameit symbol=curver   text='3.11.2'
+.nameit symbol=reldate  text='May 2022'
 
 :userdoc.
 :docprof toc=12345.
@@ -16432,9 +16432,18 @@ also see :link reftype=hd refid=SETDOS.SETDOS:elink. /S.
 :h4 name=INI_DateFmt.DateFmt
 :p.
 
-:hp2.DateFmt:ehp2. = YYY-MM-DD&colon. The foemat can be DD-MM-YYYY, MM-DD-YYYY,
-YYYY-MM-DD or YYYY-DD-MM. The separator can be "-" or "/". The year can be 2
-or 4 digits. This format is used everywhere if it is set.
+:hp2.DateFmt:ehp2. = YYYY-MM-DD&colon.
+
+Sets the format for 
+the date strings returned by :link reftype=hd refid=_DATE._DATE:elink. and elsewhere.
+This, if set, format is used everywhere dates are formatted.  If not set, the locale
+specfic date format is used.
+
+:p.
+The supported formats include DD-MM-YYYY, MM-DD-YYYY,
+YYYY-MM-DD and YYYY-DD-MM.
+The separator can be "-" or "/".
+The year can be output as 2 or 4 digits.
 
 .* --------------------------------------------------------------------------
 
@@ -16845,9 +16854,15 @@ reftype=hd refid=TITLE.TITLE:elink. internal variable.
 :h4 name=INI_TmSmpFmt.TmSmpFmt
 :p.
 :hp2.TmSmpFmt:ehp2. = YY-MM-DD-HH-MM(-SS)&colon. Sets the format for 
-time stamp (:link reftype=hd refid=_TMSMP._TMSMP:elink.). The separator 
-must be "-", seconds are optional. If not set the date and time formats 
-are used. The time order is fixed.
+the time stamp string returned by :link reftype=hd refid=_TMSMP._TMSMP:elink..
+If the format is not set the default date and time formats are used.
+:p.
+The separator may be "-" or omitted.  The "/" separator is not supported.
+:p.
+The date field order may be controlled in the same way as
+:link reftype=hd refid=INI_DateFmt.DateFmt:elink..
+The time field order is fixed at HH-MM-SS,
+although seconds may be omitted from the output string.
 
 .* --------------------------------------------------------------------------
 
