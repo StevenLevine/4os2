@@ -1,6 +1,6 @@
 
- 4OS2 version 3.09, Open Source Edition
- =======================================
+ 4OS2 version 3.11.2, Open Source Edition
+ ========================================
 
  This software is provided "AS IS" without a warranty of any kind.
 
@@ -26,6 +26,10 @@ your needs.
 
  Fixes and changes since last release
  ------------------------------------
+
+ 3.011.2
+ - Enhance formats supported by TmSmpFmt
+ - Touch now support touching directories
 
  3.010
  - Add /J switch to Copy and Move. Add CMDDirMvCpy INI key. 
@@ -182,4 +186,4 @@ established at http://svn.netlabs.org/4os2. Please use this to report bugs.
 
  This software is Copyright (c) 1989-2004 J.P. Software, Inc.
 
-20161228 AB
+2022-05-05 SHL
