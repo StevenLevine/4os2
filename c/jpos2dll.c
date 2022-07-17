@@ -1,6 +1,10 @@
 // JPOS2DLL.C - utility DLL for 4OS2; includes KEYSTACK support
 // Copyright (c) 1996 - 1997  Rex C. Conn
 
+#ifndef __SW_S
+#error Attempting to build jpos2dll.dll with stack check enabled is not supported - ___FirstThreadData will not be initialized
+#endif
+
 #include "product.h"
 
 #include <stdio.h>
