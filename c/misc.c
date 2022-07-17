@@ -250,7 +250,7 @@ char * ntharg( char *line, int index )
     if ( line == NULL )
         return NULL;
 
-    qptr = QUOTES;          // Backquote and double quote
+    qptr = QUOTES;                      // Backquote and double quote
     delims[3] = (char)( fNoComma == 0 ? ',' : '\0' );
 
     if ( index & NTHARG_SWITCH_CHAR_IS_DATA ) {
@@ -629,7 +629,7 @@ int GetRange( char *line, RANGES *aRanges, int fOnlyFirst )
 
     // size
     aRanges->SizeMin = 0L;
-    aRanges->SizeMax = (long long) LONGLONG_MAX;//-1L;      // 20090729 AB large file support
+    aRanges->SizeMax = (long long) LONGLONG_MAX;//-1L; // 20090729 AB large file support
 
     // default to "last write" on LFN / HPFS / NTFS
     aRanges->DateType = aRanges->TimeType = 0;
@@ -714,7 +714,7 @@ static int GetRangeArgs( char *arg, RANGES *aRanges )
     DATETIME sysDateTime;
 
     switch ( _ctoupper( *arg++ ) ) {
-        case 'D':               // date range
+        case 'D':                       // date range
             // check for Last Access or Created request
             if ( ( c = _ctoupper( *arg )) == 'A' ) {
                 aRanges->DateType = 1;
@@ -798,7 +798,7 @@ static int GetRangeArgs( char *arg, RANGES *aRanges )
 
             break;
 
-        case 'S':               // size range
+        case 'S':                       // size range
             // get first arg
             // FIXME - add support for LONGLONG's!
             // 20100118 AB changed to llOffset (LFS)
@@ -824,7 +824,7 @@ static int GetRangeArgs( char *arg, RANGES *aRanges )
 
             break;
 
-        case 'T':               // time range
+        case 'T':                       // time range
             // check for Last Access or Created request
             if ( (c = _ctoupper(*arg )) == 'A' ) {
                 aRanges->TimeType = 1;
@@ -951,26 +951,25 @@ int GetStrDate(char *arg, unsigned int *month, unsigned int *day, unsigned int *
 {
     int rval;
     char *DateFmt;
-    char temp[15];
     char *p;
+    char normDateFmt[15];
 
     if ( gaInifile.DateFmt != INI_EMPTYSTR ) {
         DateFmt = (char *) gpIniptr->StrData + gpIniptr->DateFmt;
-        strcpy(temp, DateFmt);
-        if (!strchr( temp, '-')) {
-            while ( p ) {
-                p = strchr(temp, '/');
-                if ( p )
-                    *p = '-';
-            }
+        strncpy(normDateFmt, DateFmt, sizeof(normDateFmt));
+        for ( p = normDateFmt; *p; p++ ) {
+            *p = toupper( *p );
+            if ( *p == '/' )
+                *p = '-';               // Normalize
         }
-        if (!strstr(strupr(temp), "YY-MM-DD"))
+        // // 2022-05-04 SHL strstr returns a pointer
+        if (strstr(normDateFmt, "YY-MM-DD"))
             rval = sscanf( arg, DATE_FMT, year, month, day );
-        if (!strstr(strupr(temp), "YY-DD-MM"))
+        if (strstr(normDateFmt, "YY-DD-MM"))
             rval = sscanf( arg, DATE_FMT, year, day, month );
-        if (!strstr(strupr(temp), "MM-DD-YY"))
+        if (strstr(normDateFmt, "MM-DD-YY"))
             rval = sscanf( arg, DATE_FMT, month, day, year );
-        if (!strstr(strupr(temp), "DD-MM-YY"))
+        if (strstr(normDateFmt, "DD-MM-YY"))
             rval = sscanf( arg, DATE_FMT, day, month, year );
     } else {
         if ( gaCountryInfo.fsDateFmt == 0 ) {
@@ -1541,7 +1540,7 @@ int is_file_or_dir( char *pszFileName )
     // check for valid drive, then expand filename to catch things
     //   like "\4dos\." and "....\wonky\*.*"
     strncpy( wname, pszFileName, sizeof(wname) ); // 2016-05-24 SHL
-    wname[sizeof(wname) - 1] = '\0'; // 2016-05-24 SHL
+    wname[sizeof(wname) - 1] = '\0';    // 2016-05-24 SHL
 
     if ( mkfname( wname, MKFNAME_NOERROR ) != NULL ) {
 
@@ -1604,7 +1603,7 @@ int is_dir( char *pszFileName )
 
         // try searching for it & see if it exists
         if ( find_file( FIND_FIRST, szDirName, 0x2317, &dir, NULL ) != NULL )
-            return(( dir.attrib & FILE_DIRECTORY ) ? 1 : 0 );      // 0x10
+            return(( dir.attrib & FILE_DIRECTORY ) ? 1 : 0 ); // 0x10
 
         // kludge for "\\server\dir" not working in NT & OS/2 & Netware
         if ( ( szDirName[0] == '\\' ) && ( szDirName[1] == '\\' ) ) {
@@ -1776,7 +1775,7 @@ int wild_cmp( char *fpWildName, char *fpFileName, int fExtension, int fWildBrack
                 fpFileName++;
 
             } else if ( ( *fpWildName == '.' ) && ( *fpFileName == '\0' ) && ( fExtension ) )
-                fpWildName++;   // no extension
+                fpWildName++;           // no extension
 
             else
                 break;
@@ -1855,157 +1854,212 @@ int ExcludeFiles( char *szFiles, char *szFilename )
 }
 
 
-// return the date, formatted appropriately by country type or custom string
+/**
+ * return the date, formatted appropriately by country type or custom string
+ * @param fTmSmp requests TmSmpFmt (timestamp format) if true otherwise requests DateFmt
+ * @returns formatted string in static variable
+ */
 char * FormatDate( int month, int day, int year, int fTmSmp )
 {
-    static char date[24] = {0};
-    int i;
+    static char dateString[24];
     char *p;
-    char *DateFmt = 0;
-    BOOL fFmtDate = FALSE;
-    BOOL NoSep = FALSE;
-    char sep[2];
-    char temp[24] = {0};
+    char *pRawFmt = 0;
+    BOOL useUserFmt = FALSE;
+    char sep = 0;
+    char ch;
+    int datePart1;                      // date parts for output
+    int datePart2;
+    int datePart3;
+    char normFmt[24] = {0};
+    char *errMsg = "Invalid format string";
 
-    if ( gaInifile.DateFmt != INI_EMPTYSTR && (!fTmSmp || gaInifile.TmSmpFmt == INI_EMPTYSTR) ) {
-        DateFmt = (char *) gpIniptr->StrData + gpIniptr->DateFmt;
-        strcpy(temp, DateFmt);
-        if ( !strchr( temp, '-')  && !strchr( temp, '/') ) {
-            return "Invalid_date_separator";
-        }
-        if (!strchr( temp, '-')) {
-            sep[0] = '/';
-            p = temp;                   // 2021-12-26 SHL
-            while ( p ) {
-                p = strchr(p, '/');     // 2021-12-26 SHL
-                if ( p )
-                    *p = '-';
+    if ( gaInifile.DateFmt != INI_EMPTYSTR && ( !fTmSmp || gaInifile.TmSmpFmt == INI_EMPTYSTR ) ) {
+        // Format as date
+        pRawFmt = (char *)gpIniptr->StrData + gpIniptr->DateFmt;
+        strcpy(normFmt, pRawFmt);
+        // Normalize format string to simplify logic
+        for ( p = normFmt; *p; p++ ) {
+            if ( *p == '-' )
+                sep = *p;
+            else if ( *p == '/' ) {
+                sep = *p;
+                *p = '-';
             }
-        } else
-            sep[0] = '-';
-        fFmtDate = TRUE;
+            else
+              *p = toupper( *p );
+        }
+        if ( !sep )
+            return errMsg;
+
+        useUserFmt = TRUE;              // Using DateFmt from ini file
         
     } else if ( gaInifile.TmSmpFmt != INI_EMPTYSTR && fTmSmp ) {
-        DateFmt = (char *) gpIniptr->StrData + gpIniptr->TmSmpFmt;
-        strcpy(temp, DateFmt);
-        if ( !strchr( temp, '-') && !strstr(strupr(temp), "HM") ) {
-            return "Invalid_date_separator";
-        }
-        if ( !strstr(strupr(temp), "HM") ) {
-            p = strstr(strupr(temp), "-H");
-            *p = 0;
+        // Format as timestamp
+        pRawFmt = (char *) gpIniptr->StrData + gpIniptr->TmSmpFmt;
+        strcpy(normFmt, pRawFmt);
+        strupr(normFmt);
+        // Unlike date format, we don't allow slashes in timestamp format
+        // Timestamp must include time part
+        if ( !strstr(normFmt, "H-M") && !strstr(normFmt, "HM") )
+            return errMsg;
+
+        useUserFmt = TRUE;              // Using timestamp format from ini file
+
+        if ( strchr(normFmt, '-') ) {
+            // Want separators
+            sep = '-';
+            // Chop time part from normalized format string
+            p = strstr(normFmt, "-H");
+            if (p)
+                *p = 0;
         }
         else {
-            p = strstr(strupr(temp), "HH");
-            *p = 0;
-            if (strstr(strupr(temp), "YM")) {
-                p = strstr(strupr(temp), "YM");
-                *p = '-';
-            }
-            if (strstr(strupr(temp), "YD")) {
-                p = strstr(strupr(temp), "YD");
-                *p = '-';
-            }
-            if (strstr(strupr(temp), "DM")) {
-                p = strstr(strupr(temp), "DM");
-                *p = '-';
-            }
-            if (strstr(strupr(temp), "MD")) {
-                p = strstr(strupr(temp), "MD");
-                *p = '-';
-            }
-            if (strstr(strupr(temp), "MY")) {
-                p = strstr(strupr(temp), "MY");
-                *p = '-';
-            }
-            if (strstr(strupr(temp), "DY")) {
-                p = strstr(strupr(temp), "DY");
-                *p = '-';
-            }
-            NoSep = TRUE;
-        }
+            // Don't want separators
+            sep = 0;
+            // Chop time part from normalized format string
+            p = strstr(strupr(normFmt), "HH");
+            if (p)
+                *p = 0;
 
-        fFmtDate = TRUE;
+            // Add separators to format string to simplify parsing
+            p = strstr(normFmt, "YM");
+            if (p)
+                *p = '-';
+            p = strstr(normFmt, "YD");
+            if (p)
+                *p = '-';
+            p = strstr(normFmt, "DM");
+            if (p)
+                *p = '-';
+            p = strstr(normFmt, "MD");
+            if (p)
+                *p = '-';
+            p = strstr(normFmt, "MD");
+            if (p)
+                *p = '-';
+            p = strstr(normFmt, "MY");
+            if (p)
+                *p = '-';
+            p = strstr(normFmt, "DY");
+            if (p)
+                *p = '-';
+        }
     }
 
+    if ( useUserFmt ) {
+        // Use user specific format
 
-    if ( fFmtDate ) {
-        int   m = month, d = day;
+        if (!strstr(normFmt, "YYY"))
+            year %= 100;                // 2 digit year
 
-        if (!strstr(strupr(temp), "YYY"))
-            year %= 100;
-        p = temp;
-        if (toupper(*p) == 'Y')
-            month = year;
-        else if (toupper(*p) == 'D')
-            month = day;
-        p = strchr(temp, '-') + 1;
-        if (toupper(*p) == 'Y')
-            day = year;
-        else if (toupper(*p) == 'M')
-            day = m;
-        p = strrchr(temp, '-') + 1;
-        if (toupper(*p) == 'D')
-            year = d;
-        else if (toupper(*p) == 'M')
-            year = m;
+        // Reorder args to match format string
+        p = normFmt;
+        ch = *p;
 
+        if (ch == 'Y')
+            datePart1 = year;
+        else if (ch == 'D')
+            datePart1 = day;
+        else if (ch == 'M')
+            datePart1 = month;
+        else
+          return errMsg;
+
+        p = strchr(p, '-');
+        if (!p)
+            return errMsg;
+        p++;
+        ch = *p;
+
+        if (ch == 'Y')
+            datePart2 = year;
+        else if (ch == 'M')
+            datePart2 = month;
+        else if (ch == 'D')
+            datePart2 = day;
+        else
+            return errMsg;
+
+        p = strchr(p, '-');
+        if (!p)
+            return errMsg;
+        p++;
+        ch = *p;
+
+        if (ch == 'D')
+            datePart3 = day;
+        else if (ch == 'M')
+            datePart3 = month;
+        else if (ch == 'Y')
+            datePart3 = year;
+        else
+            return errMsg;
     }
     else {
-    // make sure year is only 2 digits
+      // Use Country specific format
+      // make sure year is only 2 digits
         if (!gaInifile.Year4Digit)
             year %= 100;
 
-        sep[0] = gaCountryInfo.szDateSeparator[0];
+        sep = gaCountryInfo.szDateSeparator[0];
 
         if ( gaCountryInfo.fsDateFmt == 1 ) {
-    
             // Europe = dd-mm-yy
-            i = day;                        // swap day and month
-            day = month;
-            month = i;
-    
+            datePart1 = day;
+            datePart2 = month;
+            datePart3 = year;
         } else if ( gaCountryInfo.fsDateFmt == 2 ) {
-    
             // Japan = yy-mm-dd
-            i = month;                      // swap everything!
-            month = year;
-            year = day;
-            day = i;
+            datePart1 = year;
+            datePart2 = month;
+            datePart3 = day;
+        }
+        else {
+            // mm-dd-yy
+            datePart1 = month;
+            datePart2 = day;
+            datePart3 = year;
         }
     }
-    if ( fTmSmp && !NoSep) {
-        sprintf( date, "%02u%c%02u%c%02u%c%s", month, '-', day, '-', year, '-', gtime( 1 ), 0 );
-       while ( p )  {
-             p = strchr(date, ':');
-             if ( p )
-                 *p = '-';
+
+    if ( fTmSmp && sep != 0 ) {
+        // Want timestamp with separators
+        sprintf( dateString, "%02u%c%02u%c%02u%c%s", datePart1, '-', datePart2, '-', datePart3, '-', gtime( 1 ), 0 );
+        // Map colons in formatted time to dashes
+        for (p = strchr(dateString, ':'); p; p = strchr(p + 1, ':'))
+            *p = '-';
+
+        if (pRawFmt && !strstr(strupr(pRawFmt), "SS")) {
+            // No seconds requested
+            p = strrchr(dateString, '-');
+            if (p)
+                *p = 0;                 // Chop seconds
         }
-       if (DateFmt && !strstr(strupr(DateFmt), "SS")) {
-            p = strrchr(date, '-');
-            *p = '\0';
-       }
-    } else if ( fTmSmp && NoSep) {
+    } else if ( fTmSmp && sep == 0 ) {
+        // Want timestamp without separators
         char time[2] ;
         DATETIME sysDateTime;
 
-        sprintf( date, "%02u%02u%02u", month, day, year, 0 );
+        sprintf( dateString, "%02u%02u%02u", datePart1, datePart2, datePart3 );
         QueryDateTime( &sysDateTime );
         itoa( sysDateTime.hours, time, 10 );
-        strcat(date, time );
+        strcat(dateString, time );
         itoa( sysDateTime.minutes, time, 10 );
-        strcat(date, time);
-        if (DateFmt && strstr(strupr(DateFmt), "SS")) {
+        strcat(dateString, time);
+        if (pRawFmt && strstr(strupr(pRawFmt), "SS")) {
+            // Seconds requested
             itoa( sysDateTime.seconds, time, 10 );
-            strcat(date, time);
+            strcat(dateString, time);
         }
     } else {
-        // hack to turn off switches so the date isn't truncated (command resets it)
-        if (sep[0] == '/')
+        // Want date only
+        // hack to turn off switches so date isn't truncated at slash (command resets it)
+        if (sep == '/')
             gpIniptr->SwChr = 0x07;
-        sprintf( date, "%02u%c%02u%c%02u", month, sep[0], day, sep[0], year, 0 );
+        sprintf( dateString, "%02u%c%02u%c%02u", datePart1, sep, datePart2, sep, datePart3, 0 );
     }
-    return date;
+
+    return dateString;
 }
 
 
