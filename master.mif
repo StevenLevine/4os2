@@ -8,6 +8,24 @@ link = wlink
 
 # Build flags
 
+# -bc		console app
+# -bd		build target is a Dynamic Link Library (DLL), defines __SW_BD
+# -bm		multithread libs, defines __MT and __SW_BM
+# -d2		full debug (disables optimization)
+# -oa   	relax alias checking
+# -ob   	order blocks
+# -om   	enable in-line 80x87
+# -oi   	enable in-line, defines __SW_OI
+# -ol   	optimize loops, defines __SW_OL
+# -oe   	expand inline
+# -or   	enable reordering, defines __SW_OR
+# -ox   	-obmiler and -s
+# -ot   	optimize for time, defines __SW_OT
+# -s		omit stack checks, defines __SW_S
+# -we		treat all warnings as errors
+# -wx		max warnings
+# -zq		quiet
+
 # 20090430 AB added -ef, used for 'jump to error' in VisualSlickEdit (-ef doesn't work with OW1.7!)
 cflags = -zq -wx -we -ef -I..\h -I$(%WATCOM)\h\os2
 aflags = -zq
@@ -16,7 +34,12 @@ lflags =
 !ifdef debug
 cflags += -d2
 cflags += -d__DEBUG__
+# jpos2dll.dll debug builds will trap if stack check enabled
+# turn off for everyone because stack checks not really useful these days
+cflags += -s
+
 aflags += -d2
+
 lflags += debug all
 !else
 cflags += -oaxt
