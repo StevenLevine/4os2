@@ -854,7 +854,11 @@ int SetDateTime( DATETIME *sysDateTime )
 }
 
 
-// set the file date & time
+/**
+ * set file date & time
+ * @returns 0 if if file/directory accessible and date/time update ok
+ * @note older versions of this API did check if date/time set failed
+*/
 int SetFileDateTime( char *pszFilename, int hFile, DATETIME *sysDateTime, int fField )
 {
     int             rval = 0;
@@ -863,10 +867,27 @@ int SetFileDateTime( char *pszFilename, int hFile, DATETIME *sysDateTime, int fF
 
     //20090507 AB LargeFile support added
     LONGLONG        cbFile = 0LL;
+    unsigned int    ulAttribute;
+    BOOL            isDir;
 
-    if (( hFile != 0 ) || (( rval = xDosOpen( pszFilename, (PULONG)&hFile, &ulAction, cbFile, 0L, OPEN_ACTION_OPEN_IF_EXISTS, OPEN_FLAGS_NOINHERIT | OPEN_SHARE_DENYWRITE | OPEN_ACCESS_READWRITE, 0L )) == 0 )) {
-        DosQueryFileInfo( (HFILE)hFile, FIL_STANDARDL, &FileInfoBuf, sizeof(FILESTATUS3L) );
+    // Check if pszFileName is a directory
+    if (hFile != 0)
+      isDir = FALSE;
+    else {
+        QueryFileMode( pszFilename, &ulAttribute );
+        isDir = ulAttribute & FILE_DIRECTORY;
+    }
 
+    if (isDir)
+        rval = DosQueryPathInfo( pszFilename, FIL_STANDARDL, &FileInfoBuf, sizeof(FILESTATUS3L) );
+    else
+    {
+        if ( hFile == 0 )
+            rval = xDosOpen( pszFilename, (PULONG)&hFile, &ulAction, cbFile, 0L, OPEN_ACTION_OPEN_IF_EXISTS, OPEN_FLAGS_NOINHERIT | OPEN_SHARE_DENYWRITE | OPEN_ACCESS_READWRITE, 0L );
+        if (rval == 0)
+            rval = DosQueryFileInfo( (HFILE)hFile, FIL_STANDARDL, &FileInfoBuf, sizeof(FILESTATUS3L) );
+    }
+    if (rval == 0) {
         if ( fField == 0 ) {
             FileInfoBuf.fdateLastWrite.year = sysDateTime->year - 1980;
             FileInfoBuf.fdateLastWrite.month = sysDateTime->month;
@@ -890,11 +911,16 @@ int SetFileDateTime( char *pszFilename, int hFile, DATETIME *sysDateTime, int fF
             FileInfoBuf.ftimeCreation.twosecs = sysDateTime->seconds;
         }
 
-        DosSetFileInfo( (HFILE)hFile, FIL_STANDARDL, &FileInfoBuf, sizeof(FILESTATUS3L) );
+        if (isDir)
+            rval = DosSetPathInfo( pszFilename, FIL_STANDARDL, &FileInfoBuf, sizeof(FILESTATUS3L), 0 );
+        else
+            rval = DosSetFileInfo( (HFILE)hFile, FIL_STANDARDL, &FileInfoBuf, sizeof(FILESTATUS3L) );
 
-        if ( pszFilename != NULL )
-            DosClose( hFile );
-    }
+    } // if rval
+
+    // If not passed file handle, close now
+    if ( hFile && pszFilename != NULL )
+        DosClose( hFile );
 
     return rval;
 }

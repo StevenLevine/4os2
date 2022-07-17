@@ -2117,7 +2117,9 @@ char *show_atts( int attribute )
 int touch_cmd( int argc, char **argv )
 {
     char *arg;
-    int rval = 0, rc, fval = 0, fField = 0, mode = 0x07;
+    int rval = 0, rc, fval = 0, fField = 0;
+    // 2022-05-03 SHL Allow touch to touch directories
+    int mode = FILE_READONLY | FILE_HIDDEN | FILE_SYSTEM | FILE_DIRECTORY;   // was 0x07
     int fQuiet = 0, fForce = 0, fCreate = 0;
     unsigned int hours, minutes, seconds, uAttribute;
     unsigned int month, day, year;
@@ -2257,12 +2259,12 @@ int touch_cmd( int argc, char **argv )
 
                 } else
                     break;
-            }
+            } // if find_file
 
             if ( fForce ) {
-                // set the target file attributes, less RDONLY
-                (void)QueryFileMode( szTarget, &uAttribute );
-                (void)SetFileMode( szTarget, uAttribute & 0x26 );
+                // set the target file attributes, less FILE_READONLY
+                QueryFileMode( szTarget, &uAttribute );
+                SetFileMode( szTarget, uAttribute & (FILE_ARCHIVED | FILE_HIDDEN | FILE_SYSTEM) );        // was 0x26
             }
 
             // display the time being set
