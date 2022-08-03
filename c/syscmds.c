@@ -183,8 +183,10 @@ static void GetFuzzyDir( char *pszDir )
     extern char *_LpPgmName;
     struct _finddatai64_t fileinfo;
 
-    if ( gpIniptr->TreePath != INI_EMPTYSTR )
+    if ( gpIniptr->TreePath != INI_EMPTYSTR ) {
         arg = (char *)( gpIniptr->StrData + gpIniptr->TreePath );
+        strcpy(szTreePath, arg);
+    }
     else {
         sprintf( szTreePath, "\"%s4OS2.EXE\"", path_part( _LpPgmName ));
         _dos_getfileattr( szTreePath, &attrib );
