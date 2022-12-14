@@ -727,7 +727,7 @@ static int GetRangeArgs( char *arg, RANGES *aRanges )
 
             // get current date & time
             MakeDaysFromDate( (unsigned long *)&lStart, NULLSTR );
-            
+
             lEnd = lStart;
 
             // get first arg
@@ -735,7 +735,7 @@ static int GetRangeArgs( char *arg, RANGES *aRanges )
 
                 if ( MakeDaysFromDate( &lOffset, arg ) != 0 )
                     return ERROR_4DOS_INVALID_DATE;
-                
+
                 if ( *arg == '-' )
                     lStart += lOffset;
                 else if ( *arg == '+' )
@@ -957,12 +957,15 @@ int GetStrDate(char *arg, unsigned int *month, unsigned int *day, unsigned int *
     if ( gaInifile.DateFmt != INI_EMPTYSTR ) {
         DateFmt = (char *) gpIniptr->StrData + gpIniptr->DateFmt;
         strncpy(normDateFmt, DateFmt, sizeof(normDateFmt));
+        // Normalize format for comparees and sscanf
         for ( p = normDateFmt; *p; p++ ) {
             *p = toupper( *p );
             if ( *p == '/' )
-                *p = '-';               // Normalize
+                *p = '-';
         }
-        // // 2022-05-04 SHL strstr returns a pointer
+
+        // 2022-05-04 SHL strstr returns a pointer
+        // YY will match YY or YYYY - no need to check YYYY explicitly
         if (strstr(normDateFmt, "YY-MM-DD"))
             rval = sscanf( arg, DATE_FMT, year, month, day );
         if (strstr(normDateFmt, "YY-DD-MM"))
@@ -1865,6 +1868,7 @@ char * FormatDate( int month, int day, int year, int fTmSmp )
     char *p;
     char *pRawFmt = 0;
     BOOL useUserFmt = FALSE;
+    BOOL wantSec = FALSE;
     char sep = 0;
     char ch;
     int datePart1;                      // date parts for output
@@ -1878,6 +1882,7 @@ char * FormatDate( int month, int day, int year, int fTmSmp )
         pRawFmt = (char *)gpIniptr->StrData + gpIniptr->DateFmt;
         strcpy(normFmt, pRawFmt);
         // Normalize format string to simplify logic
+        // Remember if pattern contains separator
         for ( p = normFmt; *p; p++ ) {
             if ( *p == '-' )
                 sep = *p;
@@ -1891,8 +1896,10 @@ char * FormatDate( int month, int day, int year, int fTmSmp )
         if ( !sep )
             return errMsg;
 
+        wantSec = strstr(normFmt, "SS") != NULL;        // 2022-12-14 SHL
+
         useUserFmt = TRUE;              // Using DateFmt from ini file
-        
+
     } else if ( gaInifile.TmSmpFmt != INI_EMPTYSTR && fTmSmp ) {
         // Format as timestamp
         pRawFmt = (char *) gpIniptr->StrData + gpIniptr->TmSmpFmt;
@@ -1903,6 +1910,7 @@ char * FormatDate( int month, int day, int year, int fTmSmp )
         if ( !strstr(normFmt, "H-M") && !strstr(normFmt, "HM") )
             return errMsg;
 
+        wantSec = strstr(normFmt, "SS") != NULL;        // 2022-12-14 SHL
         useUserFmt = TRUE;              // Using timestamp format from ini file
 
         if ( strchr(normFmt, '-') ) {
@@ -1917,9 +1925,9 @@ char * FormatDate( int month, int day, int year, int fTmSmp )
             // Don't want separators
             sep = 0;
             // Chop time part from normalized format string
-            p = strstr(strupr(normFmt), "HH");
+            p = strstr(normFmt, "HH");
             if (p)
-                *p = 0;
+                *p = 0;                 // Chop HH-MM-SS etc.
 
             // Add separators to format string to simplify parsing
             p = strstr(normFmt, "YM");
@@ -2029,7 +2037,7 @@ char * FormatDate( int month, int day, int year, int fTmSmp )
         for (p = strchr(dateString, ':'); p; p = strchr(p + 1, ':'))
             *p = '-';
 
-        if (pRawFmt && !strstr(strupr(pRawFmt), "SS")) {
+        if (!wantSec) {
             // No seconds requested
             p = strrchr(dateString, '-');
             if (p)
@@ -2037,19 +2045,17 @@ char * FormatDate( int month, int day, int year, int fTmSmp )
         }
     } else if ( fTmSmp && sep == 0 ) {
         // Want timestamp without separators
-        char time[2] ;
         DATETIME sysDateTime;
 
         sprintf( dateString, "%02u%02u%02u", datePart1, datePart2, datePart3 );
         QueryDateTime( &sysDateTime );
-        itoa( sysDateTime.hours, time, 10 );
-        strcat(dateString, time );
-        itoa( sysDateTime.minutes, time, 10 );
-        strcat(dateString, time);
-        if (pRawFmt && strstr(strupr(pRawFmt), "SS")) {
+        // 2022-12-14 SHL provide leading zeros
+        sprintf(dateString + strlen(dateString), "%02u", sysDateTime.hours);
+        sprintf(dateString + strlen(dateString), "%02u", sysDateTime.minutes);
+
+        if (wantSec) {
             // Seconds requested
-            itoa( sysDateTime.seconds, time, 10 );
-            strcat(dateString, time);
+            sprintf(dateString + strlen(dateString), "%02u", sysDateTime.seconds);
         }
     } else {
         // Want date only
