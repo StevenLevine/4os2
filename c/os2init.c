@@ -585,7 +585,7 @@ static void InitSystemVariables( void )
              * with a sync wait and any actions that require window messages
              * will deadlock
              */
-            if ( swctl.bProgType == PROG_WINDOWABLEVIO )
+            //if ( swctl.bProgType == PROG_WINDOWABLEVIO )
                 ghwndWindowHandle = swctl.hwnd;
         }
     }

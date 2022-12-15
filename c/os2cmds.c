@@ -603,8 +603,11 @@ int start_cmd( int argc, char **argv )
             } else if ( strnicmp( arg, START_ICON_STR, 5 ) == 0 ) {
 
                 // use specified icon file
+                char *temp;
                 stdata.IconFile = _alloca( strlen( arg + 4 ));
-                strcpy( stdata.IconFile, arg + 5 );
+                temp = mkfname(arg + 5, 0);
+                strcpy( stdata.IconFile, temp);
+                fStartOptions |= START_NO_4OS2;
 
             } else if ( stricmp( arg, START_INV_STR ) == 0 ) {
 
