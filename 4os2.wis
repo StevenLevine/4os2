@@ -23,8 +23,8 @@
      CONFIGSYS="SET HELP=$(1); | ADDRIGHT"
      CONFIGSYS="SET BOOKSHELF=$(1); | ADDRIGHT"
      CONFIGSYS="LIBPATH=$(1); | ADDRIGHT"
-     EXECUTE="if not exist $(1)\4start.cmd copy $(1)\4start.cmd.tpl $(1)\4start.cmd"
-     EXECUTE="if not exist $(1)\4OS2.INI copy $(1)\4OS2.INI.tpl $(1)\4OS2.INI"
+     EXECUTE="if not exist $(1)\4start.cmd copy $(1)\4start.cmd.sample $(1)\4start.cmd"
+     EXECUTE="if not exist $(1)\4OS2.INI copy $(1)\4OS2.INI.sample $(1)\4OS2.INI"
      >This package contains the 4OS/2 Base Package.
 </PCK>
 

@@ -22,7 +22,7 @@
 @iff "%key"=="E" .OR. "%key"=="e" then
      @start e.exe %@full[%0]
 else iff "%key"=="A" .OR. "%key"=="a" then
-     @move /Q /E 4start.cmd.tpl2 4start.cmd
+     @move /Q /E 4start.cmd.sample 4start.cmd
 else
      cls
 endiff

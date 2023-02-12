@@ -1,0 +1,88 @@
+This is a sample file not intended for direct usage.
+Feel free to copy and paste and edit any of these aliases
+Alias files do not currently have a remark marker
+So work be executed like any other alias
+The "al" below is being used as a pseudo remark marker
+This works because 4os2 executes the last occurrence of 
+any given alias.
+al 2005-11-11 SHL Baseline - slamain
+al 2019-08-29 SHL Add alt-x
+al 2019-09-02 SHL Update F5
+al 2020-02-02 SHL Add ctrl-o lessx
+al 2021-04-28 SHL Drop -r from less - can use -r internally
+al 2021-06-24 SHL Add svnl svnh
+al 2021-07-21 SHL Correct svnl
+al 2021-08-22 SHL Sync slamain slat60-1
+
+This is the alias that "al" executes. It either load an 
+additional alias file or list the currently loaded aliases
+Note the use of %+ this is replaced by the current separator
+as a result this will always work even if you change separators
+al iff "%$" == "/r" then %+ alias /r %@path[%@search[4os2.exe]]%HOSTNAME\4OS2Alias.ini %+ else alias %$ %+ endiff
+
+Add a path to BEGINLIBPATH 
+addlpath addpath BEGINLIBPATH %$
+
+The next 2 start the same program. The second also finds a file for
+the program to open on start up
+cpe %CPE\bin\cpe.exe
+cpex iff exist %@full[%1] then %CPE\bin\cpe %@full[%1] %+ elseiff exist %@search[%1] then %CPE\bin\cpe %@search[%1] %+ else %+ %CPE\bin\cpe %1 %+ endiff
+
+Get a programs help with the ability to scroll back and forth through it
+cvsh cvs -H %$ | less
+
+Execute a complex commonly used command
+cvsnf ( cvs -nq upd %$ 2>nul | sed -ne "s:/:\\:g" -e "s/^[^?] //p" )
+
+Since there are cases where UnixPaths cause problems with some 
+commands and have advantages with others.
+
+These can be used to turn them off and on.
+dp `option //UnixPaths=No %+ echo Switched to DOS paths` 
+up `option //UnixPaths=Yes %+ echo Switched to unix paths`
+
+execute a cmd file
+envwic f:\eCS\install\WarpIN\envwic.cmd
+
+Search for a file and execute its help accounting for various syntaxes
+h1 `if "%@search[%1]" != "" ( %$ -h |& less )`
+h2 `if "%@search[%1]" != "" ( %$ --help |& less )`
+hq `if "%@search[%1]" != "" ( %$ -? |& less )`
+
+Conditionally load a history file
+hi iff "%$" == "/r" then %+ history /r %@path[%@search[4os2.exe]]%HOSTNAME\4OS2History.ini %+ else history %$ %+ endiff
+
+Change the behavior of the history
+hm `option //HistMove=Yes %+ echo HistMove turned on`
+
+Change the command line prompt
+pw prompt $p$_$g
+pn prompt $p$g
+
+The characters following the * are optional for executing this alias.
+wh*ence echo %@search[%1]
+
+Set some window state options. The @ prevents the commands from being Echoed
+wm @option //WindowState=Standard %+ option //WindowState=Minimize
+wr @option //WindowState=Standard %+ option //WindowState=Custom //WindowHeight=500 //WindowWidth=880
+
+An at sign indicates assigned to a keyname. 
+@alt-d dig +short
+
+You can use this keyboard alias to append to a command you have entered
+@alt-c ` | tee clip:`
+
+A double at sign is a keyboard alias that execute immediately 
+without the need to hit the enter key.
+@@alt-f4 @exit
+@@alt-f9 @option //WindowState=Standard %+ option //WindowState=Minimize
+@@f5 dir /ht
+
+An alias to save/update the alias file. 
+Note the alias file can have any name.
+savea=alias > g:\4os2\alias.lst
+
+The an alias to change the default options of the command 
+Note the * before the second kmk. 
+kmk=*kmk -j1
+

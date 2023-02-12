@@ -1,0 +1,14 @@
+
+@rem Instead of enabling the following mode command,
+@rem make a program object with properties
+@rem 'Path' "*" and 'Parameters' "/c  mode co80,100 && x:\SYS\APPS\4OS2\4OS2.EXE"
+
+@rem mode co80,100
+
+@prompt=$i$e[33m{$r}$e[36;1m[$p]$e[0m$s
+
+@alias ..=cd..
+@alias ...=cd \
+@alias dir=`iff %# eq 0 then %+ *dir /hat %+ else *dir %$ %+ endiff`
+
+@if not defined CDPATH set CDPATH=..;..\..;

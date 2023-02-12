@@ -12,7 +12,7 @@ enclosed file license.txt.
  Hint
  ----
 
- Look into the supplied *.sample/*.tpl files to see some convenient settings. If you
+ Look into the supplied *.sample files to see some convenient settings. If you
 do not have your own 4os2.ini and 4start.cmd files you can simply rename the
 sample files.  It is recommended that you check that the default settings suit
 your needs.
