@@ -100,6 +100,7 @@ void InitOS( int argc, char **argv )
         next_start_arg:
         // check for .INI filename
         // 2017-02-18 SHL Support "@ cmd" in compiled REXX
+        // FIXME to not assume file with executable extension is an INI file - see ExternalCommands and ext_part
         if ( *arg == '@' && *( arg + 1 ) ) {
             // parse the user's file - if not an .INI file, must
             //  be something like "@COPY ..."

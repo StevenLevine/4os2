@@ -936,6 +936,7 @@ static int ExternalCommands( char *pszStartLine, char *pszCmdName )
             // is it an executable extension?
             if ( *(feptr = executable_ext( ptr )) != '\0' ) {
 
+                // Yes
                 AddQuotes( pszCmdName );
 
                 // check for length & save remainder of command line
@@ -952,6 +953,7 @@ static int ExternalCommands( char *pszStartLine, char *pszCmdName )
                 rval = command( gszCmdline, 0 );
 
             } else {
+                // No
                 // OS/2 CMD.EXE allows you to execute program
                 //   names like "program.pgm"
                 // NT will execute ASSOC'd file extensions

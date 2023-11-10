@@ -188,29 +188,29 @@ typedef struct
     unsigned int WindowY;
 
         // Choices
-    unsigned char ExecWait;     // if !=0, wait for apps at cmd line
+    unsigned char ExecWait;             // if !=0, wait for apps at cmd line
 
         // String pointers
-    unsigned int NextININame;   // NextINIFile
-    unsigned int PrimaryININame;    // (internal) primary INI file name
-    unsigned int DateFmt;      // Internal date format
-    unsigned int TmSmpFmt;      // Internal date format
+    unsigned int NextININame;           // NextINIFile
+    unsigned int PrimaryININame;        // (internal) primary INI file name
+    unsigned int DateFmt;               // Internal date format
+    unsigned int TmSmpFmt;              // Internal timestamp format
 
     // Choices
-    unsigned char DupBugs;      // duplicate CMD.EXE bugs?
-    unsigned char CMDDirMvCpy;   // use CMD's move and copy style for dirictories
-    unsigned char LocalAliases; // LocalAliases
-    unsigned char LocalDirHistory;  // LocalDirHistory
-    unsigned char LocalHistory; // LocalHistory
+    unsigned char DupBugs;              // duplicate CMD.EXE bugs?
+    unsigned char CMDDirMvCpy;          // use CMD's move and copy style for dirictories
+    unsigned char LocalAliases;         // LocalAliases
+    unsigned char LocalDirHistory;      // LocalDirHistory
+    unsigned char LocalHistory;         // LocalHistory
 
-    unsigned char ANSI;     // ANSI escapes enabled/disabled
+    unsigned char ANSI;                 // ANSI escapes enabled/disabled
 
         // String pointers
-    unsigned int HelpBook;      // HelpBook
-    unsigned int SwapPath;      // path to swap file
+    unsigned int HelpBook;              // HelpBook
+    unsigned int SwapPath;              // Path to swap file
 
         // Integers
-    unsigned int Rows;      // ScreenRows
+    unsigned int Rows;                  // ScreenRows
 
     /*
     **********************************************************************
