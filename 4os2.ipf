@@ -10,10 +10,11 @@
 .nameit symbol=8ver     text='3.08'
 .nameit symbol=9ver     text='3.09'
 .nameit symbol=10ver    text='3.10'
+.nameit symbol=11ver    text='3.11'
 
 .* Use this to reference current version
-.nameit symbol=curver   text='3.11.2'
-.nameit symbol=reldate  text='May 2022'
+.nameit symbol=curver   text='3.11.4'
+.nameit symbol=reldate  text='Aug 2024'
 
 :userdoc.
 :docprof toc=12345.
@@ -19169,8 +19170,17 @@ passed to 4OS2, and to "tag" error messages with the product name. See the
 :p.
 :hp2.What's New - Bugs Fixed:ehp2.
 :lm margin=1. :parml tsize=10 break=fit .
+
+.* FIXME xref
+:pt.:hp2.&11ver.:ehp2. ¯:pd.:link reftype=hd refid=TITLE.TITLE:elink.&colon.
+Avoid title buffer overflow exception.
+
+:pt.:hp2.&10ver.:ehp2. ¯:pd.:link reftype=hd refid=_TMSMP._TMSMP:elink.&colon.
+Corrected formatting errors and ensured that all time fields are 2 digits and zero filled.
+
 :pt.:hp2.&10ver.:ehp2. ¯:pd.:link reftype=hd refid=START.START:elink.&colon. Fixed
 /ICON which requires a fullpath name and the /N switch.
+
 :pt.:hp2.&10ver.:ehp2.¯:pd.:link reftype=hd refid=_@EAWRITE.@EAWRITE:elink.[]&colon.
 Fix failure to remove EAs (ticket #9 changeset 38305). Trim blanks form beginning
 and end of EA name (ticket #10 changeset 38315)

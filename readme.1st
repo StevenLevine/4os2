@@ -1,5 +1,5 @@
 
- 4OS2 version 3.11.2, Open Source Edition
+ 4OS2 version 3.11.4, Open Source Edition
  ========================================
 
  This software is provided "AS IS" without a warranty of any kind.
@@ -26,6 +26,12 @@ your needs.
 
  Fixes and changes since last release
  ------------------------------------
+
+ 3.011.4
+ - Avoid title buffer overflow exception
+
+ 3.011.3
+ - Correct TmSmpFmt logic
 
  3.011.2
  - Enhance formats supported by TmSmpFmt
