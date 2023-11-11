@@ -1,6 +1,8 @@
 // Global variables for 4xxx / TCMD family
 //   Copyright 1992 - 1997 by Rex C. Conn
 
+#define SESSIONTITLEL   128
+
 #ifdef DEFINE_GLOBALS
 
 char AUTOSTART[] = "C:\\4START";
@@ -69,7 +71,7 @@ unsigned long glDirFlags;       // DIR flags (VSORT, RECURSE, JUSTIFY, etc.)
 int gnDirTimeField;             // creation, last access, or last write sort
 
 
-char gszSessionTitle[128];      // window title
+char gszSessionTitle[SESSIONTITLEL];    // window title
 char *gpRexxCmdline;            // pointer to REXX arguments
 char gchSysBootDrive;           // system boot drive
 

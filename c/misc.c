@@ -1638,9 +1638,8 @@ char *executable_ext( char *ptr )
 
     for ( ptr++, feptr = glpEnvironment; ; feptr = next_env( feptr ) ) {
 
-        if ( *feptr == '\0' ) {
-            break;
-        }
+        if ( *feptr == '\0' )
+            break;                      // No match
 
         if ( ( *feptr++ == '.' ) && ( wild_cmp( feptr, (char *)ptr, TRUE, TRUE ) == 0 ) ) {
 
@@ -1655,7 +1654,7 @@ char *executable_ext( char *ptr )
         //                      ;
     }
 
-    return feptr;
+    return feptr;       // pointer to match extension or empty string
 }
 
 

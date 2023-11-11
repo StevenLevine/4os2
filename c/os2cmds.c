@@ -995,7 +995,8 @@ int title_cmd( int argc, char **argv )
             return( 0 );
         }
     }
-    strcpy( gszSessionTitle, argv[1] );
+    strncpy( gszSessionTitle, argv[1], SESSIONTITLEL- 1 );       // 2023-08-06 SHL Avoid overflow
+    gszSessionTitle[SESSIONTITLEL - 1] = 0;   // Ensure terminated
     // 20090330 AB
     gaInifile.TitleIsCurDir = FALSE;
     update_task_list( NULL );

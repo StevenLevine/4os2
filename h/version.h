@@ -11,7 +11,8 @@
 #define VER_MAJOR 3
 #define VER_MINOR 11
 // #define VER_REVISION ""   // Must be string with no spaces - leading dot optional
-#define VER_REVISION "GKY"   // Must be string with no spaces - leading dot optional
+// #define VER_REVISION ".4-shl"   // Must be string with no spaces - leading dot optional
+#define VER_REVISION ".4"   // Must be string with no spaces - leading dot optional
 
 #endif
 
