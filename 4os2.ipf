@@ -10187,7 +10187,7 @@ SETDOS command(s) in your :hp1.4START:ehp1. file, which is executed when
 any shell starts.
 :p.
 :hp2.Options:ehp2.
-:lm margin=4.:parml compact tsize=8 break=fit.
+:lm margin=4.:parml compact tsize=10 break=fit.
 :pt.:hp2./B:ehp2.&colon.:pd.(Bright background) This option determines
 whether 4OS2 configures your video adapter for blinking text
 (:hp2./B0:ehp2., the default) or bright background colors (:hp2./B1:ehp2.),
@@ -10432,15 +10432,15 @@ features 3, 4, and 5).
 The features are&colon.
 .br
 :lm margin=8.:parml compact tsize=8 break=fit.
-:pt.   1:pd.All alias expansion.
-:pt.   2:pd.Nested alias expansion only.
-:pt.   3:pd.All variable expansion (environment variables and batch and alias parameters).
-:pt.   4:pd.Nested variable expansion only.
-:pt.   5:pd.Multiple commands, conditional commands, and piping.
-:pt.   6:pd.Redirection.
-:pt.   7:pd.Quoting (double quotes and back quotes) and square brackets.
-:pt.   8:pd.Escape character.
-:eparml.
+:pt.1:pd.All alias expansion.
+:pt.2:pd.Nested alias expansion only.
+:pt.3:pd.All variable expansion (environment variables and batch and alias parameters).
+:pt.4:pd.Nested variable expansion only.
+:pt.5:pd.Multiple commands, conditional commands, and piping.
+:pt.6:pd.Redirection.
+:pt.7:pd.Quoting (double quotes and back quotes) and square brackets.
+:pt.8:pd.Escape character.
+:eparml
 :p.
 If nested alias expansion is disabled, the first alias of a command is
 expanded but any aliases it invokes are not expanded. If nested variable
@@ -15657,8 +15657,8 @@ tabs, and commas are considered to be word separators. For example&colon.
 :hp2.@WORDS[["xxx",]string]:ehp2.&colon. Returns the number of words in the
 :hp2.string:ehp2.&per. The optional list of separators follows the same format as
 :link reftype=hd refid=_@WORD.@WORD:elink.&per. If the :hp2.string:ehp2.
-argument is enclosed in quotation marks, you must enter a list of separators
-as well.
+argument is enclosed in quotation marks and uses commas as separators, you must enter 
+a list of separators as well.
 
 .* --------------------------------------------------------------------------
 
