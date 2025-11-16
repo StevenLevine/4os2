@@ -173,6 +173,9 @@ int findcmd( char *cmd, int eflag )
     int low, high, mid, cond;
     char szInternalName[12];
 
+    sscanf( cmd, "%s", szInternalName );
+    if (strstr(strlwr(szInternalName), ".exe"))
+        return -1;
     // set the current compound command character & switch character
     DELIMS[5] = gpIniptr->CmdSep;
     DELIMS[6] = gpIniptr->SwChr;
