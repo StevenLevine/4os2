@@ -16924,6 +16924,14 @@ that dates will display 4 digit years. Otherwise they will be 2 digit unless
 
 .* --------------------------------------------------------------------------
 
+:h4 name=INI_Date2Digit.Date2Digit
+:p.
+:hp2.Date2Digit:ehp2. = Yes &splitvbar. NO&colon. :hp2.Yes:ehp2. specifies
+that dates will display 2 digit days. Otherwise days 1-9 will be 1 digit unless
+:link reftype=hd refid=INI_DateFmt.DateFmt:elink. is set with 4 digit years.
+
+.* --------------------------------------------------------------------------
+
 :h3 name=INIColor.Color Directives
 :p.
 These directives control the colors that 4OS2 use for its displays.
@@ -19009,6 +19017,9 @@ a custom date format which is used everywhere. Can have 2 or 4 digit years. Sepa
 can be "-" or "/". (DateFmt=YYYY-MM-DD)
 :pt.:hp2.&10ver. :ehp2. ¯:pd.:link reftype=hd refid=INI_Year4Digit.Year4Digit:elink. =
 Yes &splitvbar. NO&colon. If set to Yes, the year will always be displayed as 4 digits.
+DateFmt need not be set for this to occur. 
+:pt.:hp2.&10ver. :ehp2. ¯:pd.:link reftype=hd refid=INI_Date2Digit.Date2Digit:elink. =
+Yes &splitvbar. NO&colon. If set to Yes, the day will always be displayed as 2 digits.
 DateFmt need not be set for this to occur.
 :pt.:hp2.&10ver. :ehp2. ¯:pd.:link reftype=hd refid=INI_HistNoDups.HistNoDups:elink. = 
 Yes &splitvbar. NO&colon. If set to Yes, when you type a command that is already 
