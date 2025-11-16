@@ -19,8 +19,8 @@
 static int ListInit( void );
 static int ListOpenFile( char *);
 static void ListHome( void );
-static int ListMoveLine( int);
-static LONG MoveViewPtr(LONG, LONG *);
+static int ListMoveLine( int, BOOL);
+static LONG MoveViewPtr(LONG, LONG *, BOOL);
 static LONG ComputeLines(LONG,LONG);
 static VOID SetRightMargin( void );
 static INT DisplayLine(UINT, LONG);
@@ -416,7 +416,7 @@ static int _ffind( FFIND_STRUCT *Find )
                 n = 0;
                 if ( Find->fFlags & FFIND_REVERSE_SEARCH ) {
                     // goto the last row
-                    while ( ListMoveLine( 1 ) != 0 )
+                    while ( ListMoveLine( 1,FALSE ) != 0 )
                         ;
                 }
 
@@ -467,7 +467,7 @@ static int _ffind( FFIND_STRUCT *Find )
                     if (( Find->fFlags & FFIND_REVERSE_SEARCH ) == 0 ) {
                         if ( Find->fFlags & FFIND_HEX_DISPLAY )
                             LFile.lViewPtr += LFile.nSearchLen;
-                        else if ( ListMoveLine( 1 ) == 0 )
+                        else if ( ListMoveLine( 1,FALSE ) == 0 )
                             break;
                     }
 
@@ -621,12 +621,12 @@ static void ListHome( void )
 
 
 // move up/down "n" lines
-static int ListMoveLine( int nRows )
+static int ListMoveLine( int nRows, BOOL list )
 {
     long lTemp, lRows;
 
     lRows = nRows;
-    lTemp = MoveViewPtr( LFile.lViewPtr, &lRows );
+    lTemp = MoveViewPtr( LFile.lViewPtr, &lRows, list );
 
     if ( lRows == nRows ) {
         LFile.lCurrentLine += lRows;
@@ -901,7 +901,7 @@ int FormatLine( char szBuffer[], long lLinePtr, int *nBytesPrinted, int fTabs )
 // MoveViewPtr - Update view pointer by scrolling the number of
 //   lines specified in ptrRow.  If limited by the top or bottom
 //   of the file, modify ptrRow to indicate the actual number of rows.
-static LONG MoveViewPtr(LONG lFilePtr, LONG *ptrRow)
+static LONG MoveViewPtr(LONG lFilePtr, LONG *ptrRow, BOOL list)
 {
     int i, n;
     LONG lSaveOffset, lOffset = 0L, lRow, lRowCount = 0L;
@@ -960,7 +960,7 @@ static LONG MoveViewPtr(LONG lFilePtr, LONG *ptrRow)
                 // get previous line
                 lpEnd = LFile.lpCurrent;
                 n = GetPrevChar();
-                while ((( i = GetPrevChar()) != EOF ) && ( i != LFile.fEoL ))
+                while ((( i = GetPrevChar()) != EOF ) && (list ? ( i != LFile.fEoL ) : 1))
                     ;
 
                 // if not at start of file, move to beginning
@@ -1337,7 +1337,7 @@ wild_rewind:
 
             // get beginning of line with search text
             for ( LFile.lViewPtr = lTemp; ( c > 0 ); c-- )
-                ListMoveLine( 1 );
+                ListMoveLine( 1,FALSE );
             ListSetCurrent( LFile.lViewPtr );
         }
 

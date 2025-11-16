@@ -230,7 +230,7 @@ static int _list( char *pszFileName )
                 fSearchFlags |= FFIND_REVERSE_SEARCH;
 
                 // goto the last row
-                while ( ListMoveLine( 1 ) != 0 )
+                while ( ListMoveLine( 1,TRUE ) != 0 )
                     ;
             }
 
@@ -271,7 +271,7 @@ static int _list( char *pszFileName )
 
         case CUR_UP:
 
-            if ( ListMoveLine( -1 ) == 0 )
+            if ( ListMoveLine( -1,TRUE ) == 0 )
                 goto bad_key;
 
             Scroll(1, 0, nScreenRows, nScreenColumns, -1, nNormal);
@@ -280,7 +280,7 @@ static int _list( char *pszFileName )
 
         case CUR_DOWN:
 
-            if (ListMoveLine(1) == 0 )
+            if (ListMoveLine(1,TRUE) == 0 )
                 goto bad_key;
 
             Scroll( 1, 0, nScreenRows, nScreenColumns, 1, nNormal );
@@ -288,7 +288,7 @@ static int _list( char *pszFileName )
             // display last line
             lTemp = LFile.lViewPtr;
             lRow = (nScreenRows - 1);
-            lTemp += MoveViewPtr( lTemp,&lRow);
+            lTemp += MoveViewPtr( lTemp,&lRow,TRUE);
             if ( lRow == (nScreenRows - 1))
                 DisplayLine( nScreenRows, lTemp );
             continue;
@@ -302,7 +302,7 @@ static int _list( char *pszFileName )
 
             // goto the last row
             list_wait( LIST_WAIT );
-            while (ListMoveLine( 1 ) != 0 )
+            while (ListMoveLine( 1,TRUE ) != 0 )
                 ;
         case PgUp:
 
@@ -310,7 +310,7 @@ static int _list( char *pszFileName )
             if ( LFile.lViewPtr == 0L )
                 goto bad_key;
 
-            for (i = 1; ((i < nScreenRows) && (ListMoveLine(-1) != 0 )); i++)
+            for (i = 1; ((i < nScreenRows) && (ListMoveLine(-1,TRUE) != 0 )); i++)
                 ;
 
             break;
@@ -318,7 +318,7 @@ static int _list( char *pszFileName )
         case PgDn:
         case SPACE:
 
-            if ( ListMoveLine( nScreenRows - 1 ) == 0 )
+            if ( ListMoveLine( nScreenRows - 1,TRUE ) == 0 )
                 goto bad_key;
 
             break;
@@ -439,10 +439,10 @@ static int _list( char *pszFileName )
 
             lRow -= gpIniptr->ListRowStart;
             if ( lRow >= 0 ) {
-                LFile.lViewPtr = MoveViewPtr( 0L, &lRow );
+                LFile.lViewPtr = MoveViewPtr( 0L, &lRow,TRUE );
                 LFile.lCurrentLine = lRow;
             } else {
-                LFile.lViewPtr += MoveViewPtr( LFile.lViewPtr, &lRow );
+                LFile.lViewPtr += MoveViewPtr( LFile.lViewPtr, &lRow,TRUE );
                 LFile.lCurrentLine += lRow;
             }
             break;
@@ -467,7 +467,7 @@ static int _list( char *pszFileName )
 
             // line number probably changed, so recompute everything
             LFile.lCurrentLine = ComputeLines( 0L, LFile.lViewPtr );
-            LFile.lViewPtr = MoveViewPtr( 0L, &(LFile.lCurrentLine ));
+            LFile.lViewPtr = MoveViewPtr( 0L, &(LFile.lCurrentLine ),TRUE);
             break;
 
         case LIST_HEX_CHAR:
@@ -481,8 +481,8 @@ static int _list( char *pszFileName )
                 LFile.lViewPtr -= ( LFile.lViewPtr % 16 );
             else {
                 // if not hex, reset to start of line
-                ListMoveLine( 1 );
-                ListMoveLine( -1 );
+                ListMoveLine( 1,TRUE );
+                ListMoveLine( -1 ,TRUE);
             }
 
             // recalculate current line
@@ -546,7 +546,7 @@ FindNext:
                 fSearchFlags &= ~FFIND_REVERSE_SEARCH;
                 // skip the first line (except on /T"xxx")
                 if ( bListSkipLine )
-                    ListMoveLine( 1 );
+                    ListMoveLine( 1,TRUE );
             }
 
             bListSkipLine = 1;
