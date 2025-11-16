@@ -2264,11 +2264,29 @@ static int var_func(char *func, char *szBuffer )
                         IntToAscii(i , var );
                         break;
                     }
+                    //GKY 9/25/25 This improves the case where a string with the 1st word quoted starts the input
+                    //but doesn't account for all possible cases ie if there is no separator string but the word separator is
+                    //"," and the first word is quoted @words would fail.
                     if ( *var == '"' ) {
-			if ( fname[i-1] == '"' )
-			    fname[i-1] = '\0';
-			EscapeLine( ++fname );
-			var += i + 1;
+                        char * j;
+                        j = var;
+                        j++;
+                        while ((*j != '\"') && (*j != '\0'))
+                            j++;
+                        if (*j == '\"') {
+                            j++;
+                            while ((*j == ' ') || (*j == '\t'))
+                                j++;
+                            if (*j == ',' ) {
+                                if ( fname[i-1] == '"' )
+                                    fname[i-1] = '\0';
+                                EscapeLine( ++fname );
+                                var += (i + 1);
+                            } else
+                                fname = " ,\t";
+                        }
+                        else
+                            return ERROR_INVALID_PARAMETER;
                     } else
                         fname = " ,\t";
 
@@ -2291,9 +2309,8 @@ static int var_func(char *func, char *szBuffer )
 			char cQuote, *ptr;
 
 			// find start of arg[i]
-			while ( ( *var != '\0' ) && ( var >= szBuffer ) && ( strchr( fname, *var ) != NULL ) )
-			    var += (( n == '-' ) ? -1 : 1 );
-
+                        while ( ( *var != '\0' ) && ( var >= szBuffer ) && ( strchr( fname, *var ) != NULL ) )
+                            var += (( n == '-' ) ? -1 : 1 );
 			// search for next delimiter character
 			for ( ptr = var, cQuote = 0; (( *var != '\0' ) && ( var >= szBuffer )); ) {
 
