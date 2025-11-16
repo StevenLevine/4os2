@@ -476,8 +476,8 @@ INI_ITEM gaINIItemList[] = {
     "NextINIFile", INI_STR, 0, VNULL, &gaInifile.NextININame, DLG_NULL
     "DateFmt", INI_STR, 0, VNULL, &gaInifile.DateFmt, DLG_NULL
     "TmSmpFmt", INI_STR, 0, VNULL, &gaInifile.TmSmpFmt, DLG_NULL
-    "Year4Digit", INI_CHOICE, 0, &V_YesNo, &gaInifile.Year4Digit, DLG_DATA(IDI_Year4Digit, INI_CTL_CHECK, 0)
-    "Day2Digit", INI_CHOICE, 0, &V_YesNo, &gaInifile.Day2Digit, DLG_DATA(IDI_Day2Digit, INI_CTL_CHECK, 0)
+    "Year4Digit", INI_CHOICE, 0, &V_YesNo, &gaInifile.Year4Digit, DLG_NULL
+    "Day2Digit", INI_CHOICE, 0, &V_YesNo, &gaInifile.Day2Digit, DLG_NULL
 
     // Dummy item to hold name of primary INI file, set up here so
     // INIStr will move it around as needed, but with blank name so user
