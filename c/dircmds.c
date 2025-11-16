@@ -1560,7 +1560,8 @@ int SearchDirectory( int attrib, char *arg, DIR_ENTRY **hptr, unsigned int *entr
         // size of the extended-attribute list
         //   (including the 4 bytes for cbList)
         // KLUDGE for bug in OS/2 2.0 32-bit APIs!
-        files[ *entries ].ea_size = (( dir.cbList == 4L ) ? 0L : dir.cbList / 2 );
+        files[ *entries ].ea_size = (dir.cbList == 65535) ? GetLargeEASize(dir.name) :
+            (( dir.cbList == 4L ) ? 0L : dir.cbList / 2 );
 
         files[*entries].file_mark = 0;
         files[*entries].color = -1;

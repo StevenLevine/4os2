@@ -221,3 +221,29 @@ BOOL EAReadASCII( PCHAR pszPathName, PCHAR pszEAName, PCHAR pszString, PINT pcVa
 
     return bRC;
 }
+
+ULONG  GetLargeEASize(PSZ filename)
+{
+  ULONG EASize = 0;
+  PDENA2 pdena;
+  ULONG ulEntry = 1, ulCount = 1;
+  int rc = 0;
+
+    pdena = malloc(65536 + 1024);
+    if (pdena) {
+      while ((rc = DosEnumAttribute(ENUMEA_REFTYPE_PATH,
+                                    filename,
+                                    ulEntry,
+                                    (PVOID)pdena,
+                                    (ULONG)65536,
+                                    &ulCount,
+                                    ENUMEA_LEVEL_NO_VALUE) == 0) && ulCount)
+      {
+        //GKY 10/10/25  name size term null EA data size  sizeofcbName & EAf(lag) sizeofcbValue sizeof next offset
+        EASize += (pdena->cbName) + pdena->cbValue + (sizeof(BYTE) * 2) + sizeof(USHORT) + sizeof(USHORT);
+        ulEntry += ulCount; //next entry
+      }
+      free(pdena);
+    }
+  return EASize;
+}

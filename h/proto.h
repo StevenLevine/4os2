@@ -315,7 +315,7 @@ char * wPopSelect( int, int, int, int, char **, int, int, char *, char *, char *
 // EA.C
 BOOL _System EAWriteASCII( PCHAR, PCHAR, PCHAR );
 BOOL _System EAReadASCII( PCHAR, PCHAR, PCHAR, PINT );
-
+ULONG  GetLargeEASize(PSZ filename);
 
 // LISTPM.C
 MRESULT EXPENTRY ListTBWndProc(HWND, ULONG, MPARAM, MPARAM);
