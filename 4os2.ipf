@@ -10440,7 +10440,7 @@ The features are&colon.
 :pt.6:pd.Redirection.
 :pt.7:pd.Quoting (double quotes and back quotes) and square brackets.
 :pt.8:pd.Escape character.
-:eparml
+:eparml.
 :p.
 If nested alias expansion is disabled, the first alias of a command is
 expanded but any aliases it invokes are not expanded. If nested variable
