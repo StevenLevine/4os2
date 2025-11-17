@@ -319,11 +319,8 @@ int process_rexx( char *pszCmdName, char *line, int fRexx )
             // EXTPROC request - call an external processor
             // strip EXTPROC - use rest of line as processor name and arguments
             (void)next_arg( gszCmdline, 1 );
-
             // add the .CMD name & options
-            if (( arg = path_part( gpBatchName )) == NULL )
-                    arg = NULLSTR;
-            sprintf( strend( gszCmdline )," %s%s%s", arg, fname_part( pszCmdName ), line );
+            sprintf( strend( gszCmdline )," %s%s", pszCmdName, line );
             return ( command( gszCmdline, 0 ));
         } else if (gpIniptr->UnixPaths && ( arg = first_arg( gszCmdline )) != NULL && strnicmp( arg,"#!", 2) == 0 ) {
             // 2012-06-12 SHL Support #! if unix paths
@@ -331,9 +328,7 @@ int process_rexx( char *pszCmdName, char *line, int fRexx )
             // strip #! - use rest of line as processor name and arguments
             strcpy(gszCmdline, gszCmdline + 2);
             // add the .CMD name & options
-            if (( arg = path_part( gpBatchName )) == NULL )
-                    arg = NULLSTR;
-            sprintf( strend( gszCmdline )," %s%s%s", arg, fname_part( pszCmdName ), line );
+            sprintf( strend( gszCmdline )," %s%s", pszCmdName, line );
             return ( command( gszCmdline, 0 ));
         }
     }
